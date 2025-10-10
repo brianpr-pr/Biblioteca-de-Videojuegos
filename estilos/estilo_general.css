@@ -1,0 +1,22 @@
+body{
+    margin:0px;
+    padding:0px;
+    background-color: beige;
+}
+
+a {
+    color: inherit;       /* use same color as surrounding text */
+    text-decoration: none; /* remove underline */
+    font-size: 22px;
+    margin: 1% 5%;
+}
+
+header{
+    width: cover;
+    border:2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+}
