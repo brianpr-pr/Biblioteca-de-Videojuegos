@@ -4,5 +4,5 @@ error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./utilidades/header.php";
-include "./modulos/datos_servidor.php";
+include "./servidor/datos_servidor.php";
 include "./utilidades/footer.php";
