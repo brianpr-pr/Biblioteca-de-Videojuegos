@@ -3,8 +3,8 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
-include "./utilidades/header.php";
-include "./servidor/datos_servidor.php";
+include "./caracteristicas/utilidades/header.php";
+include "./caracteristicas/servidor/datos_servidor.php";
 $errorMensaje = "";
 $validForm = true;
 
@@ -83,7 +83,7 @@ echo "<h2>{$errorMensaje}</h2>";
 function emailValidacion($emailUsuario){
         $resultado = filter_var($emailUsuario, FILTER_VALIDATE_EMAIL);
         if($resultado){
-            include "./servidor/datos_servidor.php";
+            include "./caracteristicas/servidor/datos_servidor.php";
             
             try {
                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -105,7 +105,7 @@ function emailValidacion($emailUsuario){
     }
 
 function contraseñaComprobacion($email,$passwrd){
-    include "./servidor/datos_servidor.php";
+    include "./caracteristicas/servidor/datos_servidor.php";
     try {
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
             // Preparacion sentencias SQL
@@ -128,4 +128,4 @@ function contraseñaComprobacion($email,$passwrd){
     return false;
 }
 
-include "./utilidades/footer.php"?>
+include "./caracteristicas/utilidades/footer.php"?>

@@ -3,7 +3,7 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
-include "./utilidades/header.php";
+include "./caracteristicas/utilidades/header.php";
 
 if($_SESSION['nombre_usuario']){
     $nombreUsuario = $_SESSION['nombre_usuario'];
@@ -26,4 +26,4 @@ if($_GET['salir']){
     header("Location: ./inicio_sesion.php");
 }
 
-include "./utilidades/footer.php"?>
+include "./caracteristicas/utilidades/footer.php"?>

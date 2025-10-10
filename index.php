@@ -3,7 +3,7 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
-include "./utilidades/header.php";
+include "./caracteristicas/utilidades/header.php";
 
 if($_GET['salir']){
     $_SESSION['nombre_usuario'] = null;
@@ -31,4 +31,4 @@ if($_SESSION['nombre_usuario']){
 </div>
 
 <?php
-include "./utilidades/footer.php"?>
+include "./caracteristicas/utilidades/footer.php"?>

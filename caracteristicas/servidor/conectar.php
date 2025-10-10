@@ -1,5 +1,5 @@
 <?php
-include "./modulos/datos_servidor.php";
+include "./caracteristicas/servidor/datos_servidor.php";
 
 try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);

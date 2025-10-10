@@ -1,5 +1,5 @@
 <?php
-include "./modulos/datos_servidor.php";
+include "./caracteristicas/servidor/datos_servidor.php";
 
 try {
     // Conexión a la base de datos existente

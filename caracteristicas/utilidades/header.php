@@ -1,5 +1,5 @@
 <?php
-include "./modulos/hojas_estilo_vinculador.php";
+include "./caracteristicas/utilidades/hojas_estilo_vinculador.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,4 +18,4 @@ include "./modulos/hojas_estilo_vinculador.php";
         <a href="vista_videojuegos.php">Biblioteca de videojuegos</a>
         <a href="añadir_videojuego.php">Añadir videojuego</a>
     </header>
-<?php include "./modulos/conectar.php";?>
+<?php include "./caracteristicas/servidor/conectar.php";?>

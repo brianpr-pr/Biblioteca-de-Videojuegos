@@ -1,6 +1,6 @@
 <?php
 function vincularHojaEstilo($nombreArchivo) {
-    $pathGeneral = "./estilos/";
+    $pathGeneral = "./../../estilos/";
     return match ($nombreArchivo) {
         "añadir_videojuego.php" => "{$pathGeneral}estilo_añadir_videojuego.css",
         "editar_videojuego.php" => "{$pathGeneral}estilo_editar_videojuego.css",
