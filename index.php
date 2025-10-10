@@ -4,21 +4,10 @@ error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
+include_once "./caracteristicas/usuario/usuario.php";
 
 if($_GET['salir']){
-    $_SESSION['nombre_usuario'] = null;
-    $_SESSION['email_usuario'] = null;
-    header("");
-}
-
-$salirSesion = '';
-
-if($_SESSION['nombre_usuario']){
- $salirSesion = '<form method="GET">
-    <label for="salir">Pulse en el boton para salir de su cuenta.</label>
-    <br>
-    <button name="salir" value="true" type="send">Salir de la cuenta</button>
-</form>';
+    salirUsuario();
 }
 ?>
 
@@ -27,7 +16,13 @@ if($_SESSION['nombre_usuario']){
     <h2>El mejor sitio para almacenar videojuegos</h2>
 </div>
 <div>
-    <?php echo $salirSesion;?>
+    <?php if ($_SESSION['nombre_usuario']): ?>
+    <form method="GET">
+        <label for="salir">Pulse en el boton para salir de su cuenta.</label>
+        <br>
+        <button name="salir" value="true" type="send">Salir de la cuenta</button>
+    </form>
+    <?php endif; ?>
 </div>
 
 <?php
