@@ -4,11 +4,11 @@ error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
-include "./caracteristicas/servidor/datos_servidor.php";
+include "./caracteristicas/servidor/añadirUsuario.php";
+include "./caracteristicas/validacion/validacion.php";
 $errorMensaje = "";
 $validForm = true;
 
-//What to do with the sessions:
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
@@ -112,80 +112,12 @@ if(contraseñaValidacion($_POST['passwrd'],$_POST['passwrdDos'])){
 </div>
 <?php 
 if($validForm){
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", 
-        $username, 
-        $password);
-        // set the PDO error mode to exception
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $conn->prepare("INSERT INTO usuarios (nombre_usuario, email, passwrd)
-        VALUES (:nombre_usuario, :email, :passwrd)");
-        $stmt->bindParam(':nombre_usuario', $nombre);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':passwrd', $passwrd);
-
-        // insert a row
-        $nombre = $_POST['nombreUsuario'];
-        $email = $_POST['email'];
-        $passwrd = password_hash($_POST['passwrd'], PASSWORD_DEFAULT);
-        $stmt->execute();
-        header("Location: ./inicio_sesion.php");
-    } catch(PDOException $e) {
-        echo "{$e->getMessage()}<br>{$errorMensaje}";
-    }
+    
+    añadirUsuario($_POST['nombreUsuario'],$_POST['email'], $_POST['passwrd']);
 }
 
 $conn = null;
 
-function nombreUsuarioValidacion($nombreUsuario){
-            include "./caracteristicas/servidor/datos_servidor.php";
-            try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    // Preparacion sentencias SQL
-                    $stmt = $conn->prepare("SELECT nombre_usuario FROM usuarios WHERE nombre_usuario=:nombre_usuario");
-                    $stmt->bindParam(':nombre_usuario', $nombreUsuario, PDO::PARAM_STR);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if(!$row){
-                        return true;
-                    }
-                } catch(PDOException $e) {
-                    echo "<br>" . $e->getMessage();
-                }
-                $conn = null;
-        return false;
-}
 
-
-function emailValidacion($emailUsuario){
-        $resultado = filter_var($emailUsuario, FILTER_VALIDATE_EMAIL);
-        if($resultado){
-            include "./caracteristicas/servidor/datos_servidor.php";
-            
-            try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    // Preparacion sentencias SQL
-                    $stmt = $conn->prepare("SELECT email FROM usuarios WHERE email=:emailArgumento");
-                    $stmt->bindParam(':emailArgumento', $emailUsuario, PDO::PARAM_STR);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if(!$row){
-                        return true;
-                    }
-                } catch(PDOException $e) {
-                    echo "<br>" . $e->getMessage();
-                }
-                $conn = null;
-        }
-        return false;
-    }
-
-function contraseñaValidacion($passwordUno,$passwordDos){
-    if($passwordUno == $passwordDos){
-        return true;
-    }
-    return false;
-}
 
 include "./caracteristicas/utilidades/footer.php"?>

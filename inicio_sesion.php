@@ -4,7 +4,7 @@ error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
-include "./caracteristicas/servidor/datos_servidor.php";
+include "./caracteristicas/validacion/validacion.php";
 $errorMensaje = "";
 $validForm = true;
 
@@ -70,62 +70,12 @@ if(contraseñaComprobacion($_POST['email'],$_POST['passwrd'])){
     </form>    
 </div>
 
-
 <?php
-
-
 if($validForm){
     header("Location: ./iniciado.php");
 }
 if($_POST['enviarInicio']){
 echo "<h2>{$errorMensaje}</h2>";
 }
-function emailValidacion($emailUsuario){
-        $resultado = filter_var($emailUsuario, FILTER_VALIDATE_EMAIL);
-        if($resultado){
-            include "./caracteristicas/servidor/datos_servidor.php";
-            
-            try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    // Preparacion sentencias SQL
-                    $stmt = $conn->prepare("SELECT email FROM usuarios WHERE email=:emailArgumento");
-                    $stmt->bindParam(':emailArgumento', $emailUsuario, PDO::PARAM_STR);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $conn = null;
-                    if($row){
-                        return true;
-                    }
-                } catch(PDOException $e) {
-                    echo "<br>" . $e->getMessage();
-                }
-                $conn = null;
-        }
-        return false;
-    }
 
-function contraseñaComprobacion($email,$passwrd){
-    include "./caracteristicas/servidor/datos_servidor.php";
-    try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            // Preparacion sentencias SQL
-            $stmt = $conn->prepare("SELECT nombre_usuario,email,passwrd FROM usuarios WHERE email=:email");
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            //$conn = null;
-            if($row){
-                if(password_verify($passwrd, $row['passwrd'])){
-                    $_SESSION['nombre_usuario']=$row['nombre_usuario'];
-                    $_SESSION['email_usuario']=$row['email'];
-                    return true;
-                }
-            }
-        } catch(PDOException $e) {
-            echo "<br>" . $e->getMessage();
-        }
-    $conn = null;
-    return false;
-}
-
-include "./caracteristicas/utilidades/footer.php"?>
+include "./caracteristicas/utilidades/footer.php";
