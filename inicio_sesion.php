@@ -8,29 +8,17 @@ include "./caracteristicas/validacion/validacion.php";
 $errorMensaje = "";
 $validForm = true;
 
-//What to do with the sessions:
-
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
 
-if(emailValidacion( $_POST['email'] ) ){
-    $_SESSION['email'] = $_POST['email'];
-} else{
+if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
     $_SESSION['email'] = null;
+    $_SESSION['nombre_usuario'] = null;
     $validForm = false;
     $errorMensaje = "{$errorMensaje}<h2>Email no es correcto.</h2><br>";
 }
-
-if(contraseñaComprobacion($_POST['email'],$_POST['passwrd'])){
-    $_SESSION['passwrd'] = $_POST['passwrd'];
-} else{
-    $_SESSION['passwrd'] = null;
-    $validForm = false;
-    $errorMensaje = "{$errorMensaje}<h2>Las contraseñas no es correcta.</h2><br>";
-}
 ?>
-
 
 <div>
     <form accept="utf-8" method="POST">
@@ -43,27 +31,22 @@ if(contraseñaComprobacion($_POST['email'],$_POST['passwrd'])){
             type="email"
             name="email"
             id="email"
-            value="<?php echo $_SESSION['email'] ?? ''; ?>"
             required
             maxlength="40"
-            title="Introduce un correo electrónico válido"
-        >
+            title="Introduce un correo electrónico válido">
         <br><br>
-
         <!-- Contraseña -->
-        <label for="passwrd">Contraseña</label>
+        <label for="contraseña">Contraseña</label>
         <br>
         <input
             type="password"
-            name="passwrd"
-            id="passwrd"
-            value="<?php echo $_SESSION['passwrd'] ?? ''; ?>"
+            name="contraseña"
+            id="contraseña"
             required
             minlength="8"
             maxlength="20"
             pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
-            title="Debe tener al menos 8 caracteres, incluyendo una letra y un número"
-        >
+            title="Debe tener al menos 8 caracteres, incluyendo una letra y un número">
         <br><br>
         <!-- Botón de envío -->
         <button value="true" name="enviarInicio" type="submit">Enviar</button>
@@ -74,6 +57,7 @@ if(contraseñaComprobacion($_POST['email'],$_POST['passwrd'])){
 if($validForm){
     header("Location: ./iniciado.php");
 }
+
 if($_POST['enviarInicio']){
 echo "<h2>{$errorMensaje}</h2>";
 }

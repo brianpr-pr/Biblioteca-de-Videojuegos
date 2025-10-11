@@ -40,7 +40,7 @@ function emailValidacion($emailUsuario){
                 $conn = null;
         }
         return false;
-    }
+}
 
 function contraseñaValidacion($passwordUno,$passwordDos){
     if($passwordUno == $passwordDos){
@@ -49,26 +49,30 @@ function contraseñaValidacion($passwordUno,$passwordDos){
     return false;
 }
 
-function contraseñaComprobacion($email,$passwrd){
-    include "./caracteristicas/servidor/datos_servidor.php";
-    try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            // Preparacion sentencias SQL
-            $stmt = $conn->prepare("SELECT nombre_usuario,email,passwrd FROM usuarios WHERE email=:email");
-            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-            $stmt->execute();
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            //$conn = null;
-            if($row){
-                if(password_verify($passwrd, $row['passwrd'])){
-                    $_SESSION['nombre_usuario']=$row['nombre_usuario'];
-                    $_SESSION['email_usuario']=$row['email'];
-                    return true;
-                }
+function inicioSesion($emailUsuario, $contraseña){
+        if(filter_var($emailUsuario, FILTER_VALIDATE_EMAIL)){
+            include "./caracteristicas/servidor/datos_servidor.php";
+            
+            try {
+                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                    // Preparacion sentencias SQL
+                    $stmt = $conn->prepare("SELECT nombre_usuario, email, passwrd FROM usuarios WHERE email = :emailArgumento LIMIT 1");
+                    $stmt->execute(["emailArgumento" => $emailUsuario]);
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if($row){ 
+                        if(password_verify($contraseña, $row['passwrd'])){
+                            $_SESSION['nombre_usuario'] = $row['nombre_usuario'];
+                            $_SESSION['email_usuario'] = $row['email'];
+                            $conn = null;
+                            return true;
+                        } else{
+                            echo "La contraseña no coincide papa";
+                        }
+                    }
+            } catch(PDOException $e) {
+                    echo "<br>" . $e->getMessage();
             }
-        } catch(PDOException $e) {
-            echo "<br>" . $e->getMessage();
+            $conn = null;
         }
-    $conn = null;
     return false;
 }
