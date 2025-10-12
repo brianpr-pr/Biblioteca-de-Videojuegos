@@ -21,7 +21,6 @@ try {
         $email = $emailUsuario;
         $passwrd = password_hash($contraseñaUsuario, PASSWORD_DEFAULT);
         $stmt->execute();
-        header("Location: ./inicio_sesion.php");
     } catch(PDOException $e) {
         echo "{$e->getMessage()}<br>{$errorMensaje}";
     }

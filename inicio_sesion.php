@@ -5,18 +5,18 @@ ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/validacion/validacion.php";
-$errorMensaje = "";
-$validForm = true;
 
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
 
-if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
-    $_SESSION['email'] = null;
-    $_SESSION['nombre_usuario'] = null;
-    $validForm = false;
-    $errorMensaje = "{$errorMensaje}<h2>Email no es correcto.</h2><br>";
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
+        $_SESSION['email'] = null;
+        $_SESSION['error'] = "{$_SESSION['error']}<h2>Email no es correcto.</h2><br>";
+    }
+    header("Location:" . $_SERVER['PHP_SELF']);
 }
 ?>
 
@@ -32,6 +32,7 @@ if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
             name="email"
             id="email"
             required
+            minlength="3"
             maxlength="40"
             title="Introduce un correo electrónico válido">
         <br><br>
@@ -45,7 +46,7 @@ if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
             required
             minlength="8"
             maxlength="20"
-            pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
+            pattern="[A-Za-z0-9_.]+"
             title="Debe tener al menos 8 caracteres, incluyendo una letra y un número">
         <br><br>
         <!-- Botón de envío -->
@@ -54,12 +55,9 @@ if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
 </div>
 
 <?php
-if($validForm){
+if( $_SESSION['email']){
+    $_SESSION['error'] = null;
     header("Location: ./iniciado.php");
-}
-
-if($_POST['enviarInicio']){
-echo "<h2>{$errorMensaje}</h2>";
 }
 
 include "./caracteristicas/utilidades/footer.php";

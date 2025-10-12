@@ -6,47 +6,44 @@ $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/servidor/añadirUsuario.php";
 include "./caracteristicas/validacion/validacion.php";
-$errorMensaje = "";
-$validForm = true;
 
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
-if(nombreUsuarioValidacion($_POST['nombreUsuario'])){
-    $_SESSION['nombreUsuario'] = $_POST['nombreUsuario'];
-} else{
-    $_SESSION['nombreUsuario'] = null;
-    $validForm = false;
-    $errorMensaje = "<h2>Nombre de usuario es invalido, por favor ingrese un nombre de usuario valido.</h2><br>";
-}
+    if(nombreUsuarioValidacion($_POST['nombreUsuario'])){
+        $_SESSION['nombreUsuario'] = $_POST['nombreUsuario'];
+    } else{
+        $_SESSION['nombreUsuario'] = null;
+        $_SESSION['error'] = "{$_SESSION['error']}<h2>Nombre de usuario es invalido, por favor ingrese un nombre de usuario valido.</h2><br>";
+    }
 
-if(emailValidacion( $_POST['email'] ) ){
-    $_SESSION['email'] = $_POST['email'];
-} else{
-    $_SESSION['email'] = null;
-    $validForm = false;
-    $errorMensaje = "{$errorMensaje}<h2>Email es invalido, por favor ingrese un email valido.</h2><br>";
+    if(emailValidacion( $_POST['email'] ) ){
+        $_SESSION['email'] = $_POST['email'];
+    } else{
+        $_SESSION['email'] = null;
+        $_SESSION['error'] = "{$_SESSION['error']}<h2>Email es invalido, por favor ingrese un email valido.</h2><br>";
+    }
 
-}
-
-if(contraseñaValidacion($_POST['passwrd'],$_POST['passwrdDos'])){
-    $_SESSION['passwrd'] = $_POST['passwrd'];
-    $_SESSION['passwrdDos'] = $_POST['passwrdDos'];
-} else{
-    $_SESSION['passwrd'] = null;
-    $_SESSION['passwrdDos'] = null;
-    $validForm = false;
-    $errorMensaje = "{$errorMensaje}<h2>Las contraseñas no coinciden porfavor ingreselas de nuevo.</h2><br>";
+    if(contraseñaValidacion($_POST['contraseñaUno'],$_POST['contraseñaDos'])){
+        $_SESSION['contraseñaUno'] = $_POST['contraseñaUno'];
+        $_SESSION['contraseñaDos'] = $_POST['contraseñaDos'];
+    } else{
+        $_SESSION['contraseñaUno'] = null;
+        $_SESSION['contraseñaDos'] = null;
+        $_SESSION['error'] = "{$_SESSION['error']}<h2>Las contraseñas no coinciden porfavor ingreselas de nuevo.</h2><br>";
+    }
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 ?>
 
 <div>
-    <form method="POST">
+    <form accept="utf-8" method="POST">
         <h2>Registro</h2>
         <br>
-
         <!-- Nombre de usuario -->
         <label for="nombreUsuario">Nombre usuario</label>
         <br>
@@ -58,12 +55,11 @@ if(contraseñaValidacion($_POST['passwrd'],$_POST['passwrdDos'])){
             required
             minlength="3"
             maxlength="35"
-            pattern="[A-Za-z0-9_]+"
-            title="Solo letras, números y guiones bajos (mínimo 3 caracteres)"
+            pattern="[A-Za-z0-9_.]+"
+            title="Solo se admiten letras, números, guiones comúnes o bajos y puntos (mínimo 3 caracteres, máximo 35)"
         >
         <br><br>
-
-        <!-- Email -->
+         <!-- Email -->
         <label for="email">Email</label>
         <br>
         <input
@@ -72,52 +68,54 @@ if(contraseñaValidacion($_POST['passwrd'],$_POST['passwrdDos'])){
             id="email"
             value="<?php echo $_SESSION['email'] ?? ''; ?>"
             required
+            minlength="3"
             maxlength="40"
-            title="Introduce un correo electrónico válido"
-        >
+            title="Introduce un correo electrónico válido">
         <br><br>
-
         <!-- Contraseña -->
-        <label for="passwrd">Contraseña</label>
+        <label for="contraseñaUno">Contraseña</label>
         <br>
         <input
             type="password"
-            name="passwrd"
-            id="passwrd"
-            value="<?php echo $_SESSION['passwrd'] ?? ''; ?>"
+            name="contraseñaUno"
+            id="contraseñaUno"
+            value="<?php echo $_SESSION['contraseñaUno'] ?? ''; ?>"
             required
             minlength="8"
             maxlength="20"
-            pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
+            pattern="[A-Za-z0-9]{8,}"
             title="Debe tener al menos 8 caracteres, incluyendo una letra y un número">
         <br><br>
         <!-- Confirmar contraseña -->
-        <label for="passwrdDos">Repite la contraseña</label>
+        <label for="contraseñaDos">Repite la contraseña</label>
         <br>
         <input
             type="password"
-            name="passwrdDos"
-            id="passwrdDos"
-            value="<?php echo $_SESSION['passwrdDos'] ?? ''; ?>"
+            name="contraseñaDos"
+            id="contraseñaDos"
+            value="<?php echo $_SESSION['contraseñaDos'] ?? ''; ?>"
             required
             minlength="8"
             maxlength="20"
-            pattern="(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}"
+            pattern="[A-Za-z0-9]{8,}"
             title="Debe coincidir con la contraseña anterior">
         <br><br>
-
         <!-- Botón de envío -->
         <button type="submit">Enviar</button>
     </form>    
 </div>
-<?php 
-if($validForm){
-    
-    añadirUsuario($_POST['nombreUsuario'],$_POST['email'], $_POST['passwrd']);
+
+<?php
+if($_SESSION['nombreUsuario'] && $_SESSION['email'] && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
+    $_SESSION['error'] = null;
+    añadirUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno']);
+    $_SESSION['nombreUsuario'] = null;
+    $_SESSION['email'] = null;
+    $_SESSION['contraseñaUno'] = null;
+    $_SESSION['contraseñaDos'] = null;
+    header(header: "Location: ./inicio_sesion.php");
+} else{
+    echo $_SESSION['error'];
+    $_SESSION['error'] = null;
 }
-
-$conn = null;
-
-
-
-include "./caracteristicas/utilidades/footer.php"?>
+include "./caracteristicas/utilidades/footer.php";

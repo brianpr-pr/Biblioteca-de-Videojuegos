@@ -1,26 +1,46 @@
 <?php
 function nombreUsuarioValidacion($nombreUsuario){
+    $estado = true;
+    if(strlen($nombreUsuario) < 3 || strlen($nombreUsuario) > 35){
+        $estado = false;
+    }
+
+    if(!preg_match('/^([a-zA-Z0-9._-])+$/', $nombreUsuario)){
+        $estado = false;
+    }
+
+    if($estado){
+        try {
             include "./caracteristicas/servidor/datos_servidor.php";
-            try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    // Preparacion sentencias SQL
-                    $stmt = $conn->prepare("SELECT nombre_usuario FROM usuarios WHERE nombre_usuario=:nombre_usuario");
-                    $stmt->bindParam(':nombre_usuario', $nombreUsuario, PDO::PARAM_STR);
-                    $stmt->execute();
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if(!$row){
-                        return true;
-                    }
-                } catch(PDOException $e) {
-                    echo "<br>" . $e->getMessage();
-                }
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            // Preparacion sentencias SQL
+            $stmt = $conn->prepare("SELECT nombre_usuario FROM usuarios WHERE nombre_usuario=:nombre_usuario");
+            $stmt->execute(["nombre_usuario" => $nombreUsuario]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(!$row){
                 $conn = null;
-        return false;
+                return true;
+            }
+        } catch(PDOException $e) {
+            echo "<br>" . $e->getMessage();
+        }
+    }
+    $conn = null;
+    return false;
 }
 
 
 function emailValidacion($emailUsuario){
-        $resultado = filter_var($emailUsuario, FILTER_VALIDATE_EMAIL);
+        $resultado = true;
+        
+        if(!filter_var($emailUsuario, FILTER_VALIDATE_EMAIL)){
+            $resultado = false;
+        }
+
+        if(strlen($emailUsuario) > 40){
+            $resultado = false;
+        }
+
         if($resultado){
             include "./caracteristicas/servidor/datos_servidor.php";
             
@@ -28,10 +48,10 @@ function emailValidacion($emailUsuario){
                     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                     // Preparacion sentencias SQL
                     $stmt = $conn->prepare("SELECT email FROM usuarios WHERE email=:emailArgumento");
-                    $stmt->bindParam(':emailArgumento', $emailUsuario, PDO::PARAM_STR);
-                    $stmt->execute();
+                    $stmt->execute(['emailArgumento' => $emailUsuario]);
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     if(!$row){
+                        $conn = null;
                         return true;
                     }
                 } catch(PDOException $e) {
@@ -43,10 +63,20 @@ function emailValidacion($emailUsuario){
 }
 
 function contraseñaValidacion($passwordUno,$passwordDos){
-    if($passwordUno == $passwordDos){
-        return true;
+    $resultado = true;
+    if($passwordUno !== $passwordDos){
+        $resultado = false;
     }
-    return false;
+
+    if(strlen($passwordUno) < 8 || strlen($passwordUno) > 20){
+        $resultado = false;
+    }
+
+    if(!preg_match('/^[A-Za-z0-9]{8,}$/', $passwordUno)){
+        $resultado = false;
+    }
+
+    return $resultado;
 }
 
 function inicioSesion($emailUsuario, $contraseña){
@@ -65,8 +95,6 @@ function inicioSesion($emailUsuario, $contraseña){
                             $_SESSION['email_usuario'] = $row['email'];
                             $conn = null;
                             return true;
-                        } else{
-                            echo "La contraseña no coincide papa";
                         }
                     }
             } catch(PDOException $e) {
