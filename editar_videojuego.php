@@ -4,12 +4,18 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
-include "./caracteristicas/utilidades/header.php";
+require "./caracteristicas/utilidades/header.php";
 require "./caracteristicas/servidor/administrarVideojuegos.php";
+require "./caracteristicas/validacion/validacionVideojuego.php";
 
-//Investigar como enviar un valor por get usando header
+include_once "./caracteristicas/usuario/usuario.php";
+
+if($_GET['salir']){
+    salirUsuario();
+}
+
 if(!$_SESSION['nombre_usuario']){
-    header("Location: ./iniciado.php?error=Es necesario que incie sesion antes de poder editar un videojuego");
+    header("Location: ./inicio_sesion.php?error=Es necesario que incie sesion antes de poder editar un videojuego");
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -29,8 +35,15 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     } else{
         $_GET = null;
     }
-} else{
-    $_GET = null;
+} 
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    if(tituloValidacion($_POST['titulo'])){
+        echo "Titulo es correcto";
+    }
+
+
+
 }
 
 ?>
@@ -38,7 +51,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 <div style="margin-left: 25px;">
     <h2>Editar videojuego</h2>
     <h4>Propietario: <?php echo $s;?></h4>
-    <form>
+    <form method="POST">
         <div>
             <label for="titulo">Título</label>
             <input
@@ -129,6 +142,16 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             <button name="" value="" type="">Guardar cambios</button>
         </div>
     </form>
+</div>
+
+<div style="margin-left: 15px;">
+    <?php if ($_SESSION['nombre_usuario']): ?>
+    <form method="GET">
+        <label for="salir">Pulse en el boton para salir de su cuenta.</label>
+        <br>
+        <button name="salir" id="salir" value="true" type="send">Salir de la cuenta</button>
+    </form>
+    <?php endif; ?>
 </div>
 
 <?php

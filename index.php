@@ -15,12 +15,12 @@ if($_GET['salir']){
     <h1>Bienvenido a la biblioteca de videojuegos <?php echo $_SESSION['nombre_usuario'] ?? 'Usuario';?></h1>
     <h2>El mejor sitio para almacenar videojuegos</h2>
 </div>
-<div>
+<div style="margin-left: 15px;">
     <?php if ($_SESSION['nombre_usuario']): ?>
     <form method="GET">
         <label for="salir">Pulse en el boton para salir de su cuenta.</label>
         <br>
-        <button name="salir" value="true" type="send">Salir de la cuenta</button>
+        <button name="salir" id="salir" value="true" type="send">Salir de la cuenta</button>
     </form>
     <?php endif; ?>
 </div>

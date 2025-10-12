@@ -4,13 +4,16 @@ error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
-include "./caracteristicas/validacion/validacion.php";
+include "./caracteristicas/validacion/validacionUsuario.php";
 
-/*
-//Desactivado debido a un bug
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
-}*/
+}
+if($_SERVER['REQUEST_METHOD'] === 'GET'){
+    if(array_key_exists('error', $_GET)){
+        echo "<h1>{$_GET['error']}</h1>";
+    }
+}
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 

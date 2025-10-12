@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/servidor/añadirUsuario.php";
-include "./caracteristicas/validacion/validacion.php";
+include "./caracteristicas/validacion/validacionUsuario.php";
 
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");

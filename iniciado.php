@@ -11,11 +11,15 @@ if($_SESSION['nombre_usuario']){
 ?>
 
 <h2>Bienvenido <?php echo $nombreUsuario;?></h2>
-<form method="GET">
-    <label for="salir">Pulse en el boton para salir de su cuenta.</label>
-    <br>
-    <button name="salir" value="true" type="send">Salir de la cuenta</button>
-</form>
+<div style="margin-left: 15px;">
+    <?php if ($_SESSION['nombre_usuario']): ?>
+    <form method="GET">
+        <label for="salir">Pulse en el boton para salir de su cuenta.</label>
+        <br>
+        <button name="salir" id="salir" value="true" type="send">Salir de la cuenta</button>
+    </form>
+    <?php endif; ?>
+</div>
 
 
 <?php 
