@@ -48,6 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <label for="nombreUsuario">Nombre usuario</label>
         <br>
         <input
+            placeholder="Ingrese el nombre del usuario" 
             type="text"
             name="nombreUsuario"
             id="nombreUsuario"
@@ -55,8 +56,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             required
             minlength="3"
             maxlength="35"
-            pattern="[A-Za-z0-9_.]+"
-            title="Solo se admiten letras, números, guiones comúnes o bajos y puntos (mínimo 3 caracteres, máximo 35)"
+            pattern="[A-Za-z0-9_.]{3,35}"
+            title="Solo se admiten letras, números, guiones bajos y puntos (mínimo 3 caracteres, máximo 35)"
         >
         <br><br>
          <!-- Email -->
@@ -83,7 +84,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             required
             minlength="8"
             maxlength="20"
-            pattern="[A-Za-z0-9]{8,}"
+            pattern="[A-Za-z0-9]{8,20}"
             title="Debe tener al menos 8 caracteres, incluyendo una letra y un número">
         <br><br>
         <!-- Confirmar contraseña -->
@@ -97,7 +98,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             required
             minlength="8"
             maxlength="20"
-            pattern="[A-Za-z0-9]{8,}"
+            pattern="[A-Za-z0-9]{8,20}"
             title="Debe coincidir con la contraseña anterior">
         <br><br>
         <!-- Botón de envío -->

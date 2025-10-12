@@ -3,8 +3,9 @@ session_start();
 error_reporting(E_ALL & ~E_WARNING);
 ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
-include "./caracteristicas/utilidades/header.php";
-include "./caracteristicas/servidor/mostrarVideojuegos.php/";
+require "./caracteristicas/utilidades/header.php";
+require "./caracteristicas/servidor/administrarVideojuegos.php";
+$_SESSION['nombre_usuario'] = "luigi";
 ?>
 
 <h2>Colección de videojuegos</h2>

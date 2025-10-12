@@ -6,9 +6,11 @@ $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/validacion/validacion.php";
 
+/*
+//Desactivado debido a un bug
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
-}
+}*/
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
