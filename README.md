@@ -4,7 +4,7 @@ Listado de errores o cosas a mejorar:
 
 2. Crear un regex más robusto, sobretodo para contraseñas.
 
-3. Añadir pagina qpara añadir videojuegos.
+3. Agregar pagina para añadir videojuegos.
 
 4. Añadir javascript para mostrar si la contraseña cumple con la validación, si el titulo coincide con juegos que esten en la base de datos.
 
