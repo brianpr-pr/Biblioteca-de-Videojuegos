@@ -41,7 +41,23 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 } */
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    echo $_POST['url'];
+print_r($_FILES);
+var_dump($_POST);
+
+switch($_FILES['imagen']['error']){
+    case UPLOAD_ERR_PARTIAL:
+        exit("Archivo subido parcialmente");
+
+    case UPLOAD_ERR_NO_FILE:
+        exit('El archivo no fue subido correctamente');
+
+    case UPLOAD_ERR_EXTENSION:
+        exit('El archivo no fue subido, tiene una extension no admitida');
+
+    default:
+        exit('Error desconocido');       
+}
+
 }
 
 ?>
@@ -51,10 +67,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <form method="POST" enctype="multipart/form-data">
         <div>
             <label for="imagen">Imagen de caratula</label>
-            <input 
+            <input
                 value="<?php echo $_GET['url']; ?>"
-                id="imagen" 
-                name="imagen" 
+                id="imagen"
+                name="imagen"
                 type="file" 
                 accept="image/jpg, image/png"
             />
