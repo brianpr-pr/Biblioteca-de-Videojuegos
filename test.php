@@ -10,15 +10,17 @@ require "./caracteristicas/validacion/validacionVideojuego.php";
 
 include_once "./caracteristicas/usuario/usuario.php";
 
-/*
-if($_GET['salir']){
+
+/*if($_GET['salir']){
     salirUsuario();
 }*/
 
+/*
 if(!$_SESSION['nombre_usuario']){
     header("Location: ./inicio_sesion.php?error=Es necesario que incie sesion antes de poder editar un videojuego");
-}
+}*/
 
+/*
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     if(array_key_exists('titulo_clave', $_GET)){
         $datosVideojuego = videojuegoDatos($_GET['titulo_clave']);
@@ -36,35 +38,30 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     } else{
         $_GET = null;
     }
-} 
+} */
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if(tituloValidacion($_POST['titulo'], $_SESSION['nombre_usuario'])){
-        echo "Titulo es correcto";
-    }
+    echo $_POST['url'];
 }
 
 ?>
 
-<div style="margin-left: 25px;">
     <h2>Editar videojuego</h2>
     <h4>Propietario: <?php echo $s;?></h4>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <div>
-            <label for="titulo">Título</label>
-            <input
-                value="<?php echo $_GET['titulo']; ?>"
-                placeholder="Ingrese un titulo"
-                name="titulo" 
-                id="titulo" 
-                type="text"
-                required
-                minlength="1"
-                maxlength="40"
-                pattern="[A-Za-z0-9_.]{1,40}"
-                title="Solo se admiten letras, números, guiones bajos y puntos 
-                (mínimo 1 caracter, máximo 40)"
+            <label for="imagen">Imagen de caratula</label>
+            <input 
+                value="<?php echo $_GET['url']; ?>"
+                id="imagen" 
+                name="imagen" 
+                type="file" 
+                accept="image/jpg, image/png"
             />
+        </div>
+        <br><br>
+         <div>
+            <button name="" value="" type="">Guardar cambios</button>
         </div>
     </form>
 </div>

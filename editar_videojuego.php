@@ -35,14 +35,34 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     } else{
         $_GET = null;
     }
-} 
+} else{
+    $_GET = null;
+}
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if(tituloValidacion($_POST['titulo'])){
-        echo "Titulo es correcto";
+    if(!tituloValidacion($_POST['titulo'], $_SESSION['nombre_usuario'])){
+        $_GET['titulo'] = null;
     }
 
+    if(!autorValidacion($_POST['autor'])){
+        $_GET['autor'] = null;
+    }
 
+    if(!descripcionValidacion($_POST['descripcion'])){
+        $_GET['descripcion'] = null;
+    }
+
+    if(!categoriaValidacion($_POST['categoria'])){
+        $_GET['categoria'] = null;
+    }
+
+    if(!fechaValidacion($_POST['fecha'])){
+        $_GET['fecha'] = null;
+    }
+
+    if(!caratulaValidacion($_POST['caratula'])){
+        $_GET['caratula'] = null;
+    }
 
 }
 
@@ -53,6 +73,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <h4>Propietario: <?php echo $s;?></h4>
     <form method="POST">
         <div>
+            <!-- Titulo videojuego-->
             <label for="titulo">Título</label>
             <input
                 value="<?php echo $_GET['titulo']; ?>"
@@ -64,11 +85,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 minlength="1"
                 maxlength="40"
                 pattern="[A-Za-z0-9_.]{1,40}"
-                title="Solo se admiten letras, números, guiones bajos y puntos (mínimo 1 caracter, máximo 40)"
+                title="Solo se admiten letras, números, guiones bajos y puntos 
+                (mínimo 1 caracter, máximo 40)"
             />
+            <!-- Autor videojuego-->
             <label for="autor">Autor</label>
-            <input 
-                value="<?php echo $_GET['autor']; ?>"
+            <input
+                value="<?php echo $_GET['autor'] ?? ''; ?>"
                 placeholder="Ingrese el autor"
                 name="autor"
                 id="autor"
@@ -81,10 +104,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             />
         </div>
         <br>
+        <!-- Descripción videojuego -->
         <label for="descripcion">Descripción</label>
         <br><br>
         <textarea
-            value="<?php echo $_GET['descripcion']; ?>"
+            style="padding:0px;"
+            value="<?php echo $_GET['descripcion'] ?? ''; ?>"
             placeholder="Ingrese una descripción del titulo"
             name="descripcion"
             id="descripcion"
@@ -93,17 +118,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             required
             minlength="3"
             maxlength="100"
-            pattern="[A-Za-z0-9_.]{3,100}"
-            title="Solo se admiten letras, números, guiones bajos y puntos (mínimo 3 caracteres, máximo 100)"    
-        >
-        </textarea>
-
+            pattern="[A-Za-z0-9_. ]{3,100}"
+            title="Solo se admiten letras, números, guiones bajos, puntos y espacios en blanco 
+            (mínimo 3 caracteres, máximo 100)
+        "></textarea>
         <br><br>
         <div>
+            <!--Categoria-->
             <label for="categoria">Categoría</label>
-            <select>
+            <select name="categoria">
                 <?php echo mostrarCategorias()?>
             </select>
+            <!--Fecha-->
             <label for="fecha">Fecha</label>
             <input 
             value="<?php echo $_GET['fecha']; ?>"
@@ -111,6 +137,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </div>
         <br><br>
         <div>
+            <!--Caratula-->
             <label for="caratula">Nombre de archivo</label>
             <input 
                 value="<?php echo $_GET['caratula']; ?>"
@@ -118,11 +145,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 id="caratula" 
                 type="text"
                 maxlength="45"
-                pattern="[A-Za-z0-9_.]{0,45}"
+                pattern="[A-Za-z0-9_. ]{0,45}"
                 title="Solo se admiten letras, números, guiones bajos y puntos (máximo 45)"
             />
             <br><br>
-            <label for="caratula">Imagen de caratula</label>
+            <label for="imagen">Imagen de caratula</label>
             <input 
                 value="<?php echo $_GET['url']; ?>"
                 id="imagen" 

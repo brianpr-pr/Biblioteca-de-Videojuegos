@@ -10,4 +10,7 @@ Listado de errores o cosas a mejorar:
 
 5. Añadir placeholders a registro/inicio de sesión.
 
-6. Seguir trabajando en la pagina de editar_videojuego.php
+6. Seguir trabajando en la pagina de editar_videojuego.php, me quede en validacion de 
+las imagenes subidas como portada para los videojuegos.
+Link:
+https://www.youtube.com/watch?v=K_W5ZqwEcqs
