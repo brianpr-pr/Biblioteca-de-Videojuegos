@@ -41,23 +41,9 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 } */
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-print_r($_FILES);
-var_dump($_POST);
-
-switch($_FILES['imagen']['error']){
-    case UPLOAD_ERR_PARTIAL:
-        exit("Archivo subido parcialmente");
-
-    case UPLOAD_ERR_NO_FILE:
-        exit('El archivo no fue subido correctamente');
-
-    case UPLOAD_ERR_EXTENSION:
-        exit('El archivo no fue subido, tiene una extension no admitida');
-
-    default:
-        exit('Error desconocido');       
-}
-
+    if(caratulaValidacion($_FILES['imagen'])){
+        echo "<br><h1>Exito</h1>";
+    }
 }
 
 ?>
@@ -67,12 +53,12 @@ switch($_FILES['imagen']['error']){
     <form method="POST" enctype="multipart/form-data">
         <div>
             <label for="imagen">Imagen de caratula</label>
+            <!--<input type="hidden" name="MAX_FILE_SIZE" value="1048576">-->
             <input
-                value="<?php echo $_GET['url']; ?>"
                 id="imagen"
                 name="imagen"
                 type="file" 
-                accept="image/jpg, image/png"
+                accept="image/jpeg, image/png"
             />
         </div>
         <br><br>
@@ -87,7 +73,7 @@ switch($_FILES['imagen']['error']){
     <form method="GET">
         <label for="salir">Pulse en el boton para salir de su cuenta.</label>
         <br>
-        <button name="salir" id="salir" value="true" type="send">Salir de la cuenta</button>
+        <button name="salir" id="salir" value="true" type="submit">Salir de la cuenta</button>
     </form>
     <?php endif; ?>
 </div>

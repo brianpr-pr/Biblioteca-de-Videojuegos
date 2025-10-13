@@ -88,14 +88,33 @@ function fechaValidacion($fecha){
 
 
 function caratulaValidacion($caratula){
-$estado = true;
-    if(strlen($caratula) > 45){
-        $estado = false;
+    $estado = true;
+    print_r($_FILES);
+    var_dump($_POST);
+
+    switch($_FILES['imagen']['error']){
+        case UPLOAD_ERR_PARTIAL:
+            exit("Archivo subido parcialmente");
+
+        case UPLOAD_ERR_NO_FILE:
+            exit('El archivo no fue subido correctamente');
+
+        case UPLOAD_ERR_EXTENSION:
+            exit('El archivo no fue subido, tiene una extension no admitida');
+        
+        case UPLOAD_ERR_FORM_SIZE:
+            exit('El archivo excede el limite en tamaño impuesto en el formulario HTML (MAX_FILE_SIZE).');
+        
+        case UPLOAD_ERR_INI_SIZE:
+            exit('El archivo excede el limite en tamaño impuesto en el archivo de configuración php.ini (upload_max_filesize).');
+        
     }
 
-    if(!preg_match('/^([a-zA-Z0-9._ ]){0,45}+$/', $caratula)){
-        $estado = false;
+    if($_FILES['imagen']['size'] > 1048576){
+        exit("Imagen es demasiado grande, máximo 1MB");
     }
+
+
 
     return $estado;
 }
