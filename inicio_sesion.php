@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </div>
 
 <?php
-if( $_SESSION['email']){
+if( $_SESSION['email'] && $_SESSION['nombre_usuario']){
     $_SESSION['error'] = null;
     header("Location: ./iniciado.php");
 }

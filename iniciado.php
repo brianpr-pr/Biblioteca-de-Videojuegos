@@ -5,12 +5,12 @@ ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 
-if($_SESSION['nombre_usuario']){
-    $nombreUsuario = $_SESSION['nombre_usuario'];
+if(!$_SESSION['nombre_usuario']){
+    header("Location: inicio_sesion.php");
 }
 ?>
 
-<h2>Bienvenido <?php echo $nombreUsuario;?></h2>
+<h2>Bienvenido <?php echo $_SESSION['nombre_usuario'];?></h2>
 <div style="margin-left: 15px;">
     <?php if ($_SESSION['nombre_usuario']): ?>
     <form method="GET">
