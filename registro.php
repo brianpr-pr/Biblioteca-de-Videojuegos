@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <label for="nombreUsuario">Nombre usuario</label>
         <br>
         <input
-            placeholder="Ingrese el nombre del usuario" 
+            placeholder="Ingrese su nombre de usuario." 
             type="text"
             name="nombreUsuario"
             id="nombreUsuario"
@@ -64,6 +64,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <label for="email">Email</label>
         <br>
         <input
+            placeholder="Ingrese su email." 
             type="email"
             name="email"
             id="email"
@@ -85,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             minlength="8"
             maxlength="20"
             pattern="[A-Za-z0-9]{8,20}"
-            title="Debe tener al menos 8 caracteres, incluyendo una letra y un número">
+            title="Debe tener al menos 8 caracteres, incluyendo una letra y un número.">
         <br><br>
         <!-- Confirmar contraseña -->
         <label for="contraseñaDos">Repite la contraseña</label>

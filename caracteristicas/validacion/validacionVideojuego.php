@@ -85,8 +85,6 @@ function fechaValidacion($fecha){
     return false;
 }
 
-
-
 function caratulaValidacion($caratula){
     $estado = true;
     print_r($_FILES);
@@ -112,6 +110,17 @@ function caratulaValidacion($caratula){
 
     if($_FILES['imagen']['size'] > 1048576){
         exit("Imagen es demasiado grande, máximo 1MB");
+    }
+
+
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime_type = $finfo->file($_FILES["image"]["tmp_name"]);
+
+    exit($mime_type);
+    $mime_types = ['image/gif', "image/png" , "imgae/jpeg"];
+
+    if( ! in_array($_FILES['image']['type'], $mime_types)){
+        exit("Formato de imagen invalido");
     }
 
 

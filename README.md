@@ -8,7 +8,8 @@ Listado de errores o cosas a mejorar:
 
 4. Añadir javascript para mostrar si la contraseña cumple con la validación, si el titulo coincide con juegos que esten en la base de datos.
 
-5. Añadir placeholders a registro/inicio de sesión.
-
 6. Seguir trabajando en la pagina de editar_videojuego.php, me quede en validacion de  las imagenes subidas como portada para los videojuegos.
 Link:
+https://www.youtube.com/watch?v=K_W5ZqwEcqs
+
+7. Modificar include y cambiarlos por require_once en todos los imports. ademas de añadir un manejo de errores en caso de que no se encuentre ese archivo, con algún redireccionamiento a otra pagina.

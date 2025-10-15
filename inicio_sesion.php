@@ -33,6 +33,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <label for="email">Email</label>
         <br>
         <input
+            placeholder="Ingrese su email." 
             type="email"
             name="email"
             id="email"
