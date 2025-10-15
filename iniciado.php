@@ -16,7 +16,7 @@ if(!$_SESSION['nombre_usuario']){
     <form method="GET">
         <label for="salir">Pulse en el boton para salir de su cuenta.</label>
         <br>
-        <button name="salir" id="salir" value="true" type="send">Salir de la cuenta</button>
+        <button name="salir" id="salir" value="true" type="submit">Salir de la cuenta</button>
     </form>
     <?php endif; ?>
 </div>

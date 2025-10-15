@@ -40,38 +40,51 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $test = true;
     if(!tituloValidacion($_POST['titulo'], $_SESSION['nombre_usuario'])){
         $_GET['titulo'] = null;
+        $test = false;
     }
 
     if(!autorValidacion($_POST['autor'])){
         $_GET['autor'] = null;
+        $test = false;
     }
 
     if(!descripcionValidacion($_POST['descripcion'])){
         $_GET['descripcion'] = null;
+        $test = false;
     }
 
     if(!categoriaValidacion($_POST['categoria'])){
         $_GET['categoria'] = null;
+        $test = false;
     }
 
     if(!fechaValidacion($_POST['fecha'])){
         $_GET['fecha'] = null;
+        $test = false;
     }
 
-    if(!caratulaValidacion($_POST['caratula'])){
-        $_GET['caratula'] = null;
+    try{
+        if(!caratulaValidacion()){
+            $_GET['caratula'] = null;
+            $test = false;
+        }
+    }catch(Exception $e){
+        echo "<br><h1>" . $e->getMessage() . "</h1>";
     }
 
+    if($test){
+        echo "<h1>Todo correcto</h1>";
+    }
 }
-
 ?>
 
 <div style="margin-left: 25px;">
     <h2>Editar videojuego</h2>
     <h4>Propietario: <?php echo $s;?></h4>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <div>
             <!-- Titulo videojuego-->
             <label for="titulo">Título</label>
@@ -84,7 +97,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 required
                 minlength="1"
                 maxlength="40"
-                pattern="[A-Za-z0-9_.]{1,40}"
+                pattern="[A-Za-z0-9_. ]{1,40}"
                 title="Solo se admiten letras, números, guiones bajos y puntos 
                 (mínimo 1 caracter, máximo 40)"
             />
@@ -109,7 +122,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <br><br>
         <textarea
             style="padding:0px;"
-            value="<?php echo $_GET['descripcion'] ?? ''; ?>"
             placeholder="Ingrese una descripción del titulo"
             name="descripcion"
             id="descripcion"
@@ -121,7 +133,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             pattern="[A-Za-z0-9_. ]{3,100}"
             title="Solo se admiten letras, números, guiones bajos, puntos y espacios en blanco 
             (mínimo 3 caracteres, máximo 100)
-        "></textarea>
+        "><?php echo $_GET['descripcion'] ?? ''; ?></textarea>
         <br><br>
         <div>
             <!--Categoria-->
@@ -150,27 +162,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             />
             <br><br>
             <label for="imagen">Imagen de caratula</label>
-            <input 
-                value="<?php echo $_GET['url']; ?>"
-                id="imagen" 
-                name="imagen" 
-                type="file" 
-                accept="image/jpg, image/png"
+            <input
+                id="imagen"
+                name="imagen"
+                type="file"
+                accept="image/jpeg, image/png, image/gif"
+                title="Solo se aceptan archivos de tamaño maximo: 1MB; tipo: png, jpeg, gif;"
             />
         </div>
         <br><br>
         <label for="nombre_usuario">Subido por</label>
-        <input 
+        <input
+        readonly
         value="<?php echo $_GET['nombre_usuario']; ?>"
-        name="nombre_usuario" id="nombre_usuario" type="text" placeholder=""/>
+        name="nombre_usuario" id="nombre_usuario" 
+        type="text" />
         <br><br>
         <div>
-            <button name="" value="" type="">Cancelar</button>
-            <button name="" value="" type="">Guardar cambios</button>
+            <button name="" value="" type="submit">Guardar cambios</button>
+            <button name="" value="" type="reset">Cancelar</button>
         </div>
     </form>
 </div>
-
+<br><br>
 <div style="margin-left: 15px;">
     <?php if ($_SESSION['nombre_usuario']): ?>
     <form method="GET">

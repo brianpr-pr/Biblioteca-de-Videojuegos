@@ -13,3 +13,5 @@ Link:
 https://www.youtube.com/watch?v=K_W5ZqwEcqs
 
 7. Modificar include y cambiarlos por require_once en todos los imports. ademas de añadir un manejo de errores en caso de que no se encuentre ese archivo, con algún redireccionamiento a otra pagina.
+
+8. En validacionVideojuegos.php añadir que si ya existe en nuestro directorio una caratula con el mismo nombre que se lo cambie usando el nombre del directorio temporal:

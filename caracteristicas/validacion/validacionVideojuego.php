@@ -5,7 +5,7 @@ $estado = true;
         $estado = false;
     }
 
-    if(!preg_match('/^([a-zA-Z0-9._]){1,40}+$/', $titulo)){
+    if(!preg_match('/^([a-zA-Z0-9._ ]){1,40}+$/', $titulo)){
         $estado = false;
     }
 
@@ -85,45 +85,56 @@ function fechaValidacion($fecha){
     return false;
 }
 
-function caratulaValidacion($caratula){
-    $estado = true;
-    print_r($_FILES);
-    var_dump($_POST);
-
+function caratulaValidacion(){
     switch($_FILES['imagen']['error']){
         case UPLOAD_ERR_PARTIAL:
-            exit("Archivo subido parcialmente");
+            throw new ErrorException("Archivo subido parcialmente");
 
         case UPLOAD_ERR_NO_FILE:
-            exit('El archivo no fue subido correctamente');
+            throw new ErrorException('El archivo no fue subido correctamente');
 
         case UPLOAD_ERR_EXTENSION:
-            exit('El archivo no fue subido, tiene una extension no admitida');
+            throw new ErrorException('El archivo no fue subido, tiene una extension no admitida');
         
         case UPLOAD_ERR_FORM_SIZE:
-            exit('El archivo excede el limite en tamaño impuesto en el formulario HTML (MAX_FILE_SIZE).');
+            throw new ErrorException('El archivo excede el limite en tamaño impuesto en el formulario HTML (MAX_FILE_SIZE).');
         
         case UPLOAD_ERR_INI_SIZE:
-            exit('El archivo excede el limite en tamaño impuesto en el archivo de configuración php.ini (upload_max_filesize).');
-        
+            throw new ErrorException('El archivo excede el limite en tamaño impuesto en el archivo de configuración php.ini (upload_max_filesize).');
+        case UPLOAD_ERR_NO_TMP_DIR:
+            throw new ErrorException('Directorio temporal no encotrado.');
+        case UPLOAD_ERR_CANT_WRITE:
+            throw new ErrorException('Fallo al editar el archivo.');   
     }
 
     if($_FILES['imagen']['size'] > 1048576){
-        exit("Imagen es demasiado grande, máximo 1MB");
+        throw new ErrorException("Imagen es demasiado grande, máximo 1MB");
     }
 
-
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $mime_type = $finfo->file($_FILES["image"]["tmp_name"]);
-
-    exit($mime_type);
-    $mime_types = ['image/gif', "image/png" , "imgae/jpeg"];
-
-    if( ! in_array($_FILES['image']['type'], $mime_types)){
-        exit("Formato de imagen invalido");
+    if( ! in_array($_FILES['imagen']['type'], ['image/gif', "image/png" , "image/jpeg"])){
+        throw new ErrorException("Formato de imagen invalido: ". var_dump($_FILES['image']) );
     }
 
+    $rutaLimpia = limpiarRuta($_FILES['imagen']);
+    
+    if(file_exists($rutaLimpia)){
+        throw new ErrorException("Ya existe un archivo con este nombre.");
+    }
 
+    if( ! move_uploaded_file($_FILES['imagen']['tmp_name'],  $rutaLimpia)){
+        throw new ErrorException("Fallo al mover el archivo");
+    }
 
-    return $estado;
+    if(file_exists($rutaLimpia)){
+        unlink($rutaLimpia);
+    }
+
+    return true;
+}
+
+function limpiarRuta($arrAsociativoImagen){
+    $pathInfo = pathinfo($arrAsociativoImagen['name']);
+    $nombreLimpio = preg_replace("/[^\w-]/", "_", $pathInfo['filename']);
+    $rutaLimpia = "./caratulas/{$nombreLimpio}.{$pathInfo['extension']}" ;
+    return $rutaLimpia;
 }
