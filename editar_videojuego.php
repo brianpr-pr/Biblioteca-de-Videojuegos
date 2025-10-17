@@ -196,4 +196,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </div>
 
 <?php
+
+//Comprobar que todo sea correcto en cuyo caso realizar update con los nuevos datos:
+
+
 include "./caracteristicas/utilidades/footer.php";

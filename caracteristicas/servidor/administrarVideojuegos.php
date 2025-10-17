@@ -113,3 +113,64 @@ function mostrarCategorias(){
     }
     $conn = null;
 }
+
+function modificarVideojuego(){
+    try{
+        require "./caracteristicas/servidor/datos_servidor.php";
+
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        
+        $stmt = $conn->prepare("
+            UPDATE videojuegos SET
+            titulo_clave=:titulo_clave, 
+            titulo=:titulo,
+            descripcion=:descripcion,
+            autor=:autor,
+            caratula=:caratula,
+            categoria_clave=:categoria_clave,
+            url=:url,
+            fecha=:fecha
+            WHERE titulo_clave = 'fifa14-deportes'
+            AND nombre_usuario=:nombre_usuario
+        ");
+
+        $tituloClave = "TituloClaveTest"; 
+        $titulo = "Titulo";
+        $descripcion = "Descripcion";
+        $autor = "Brian";
+        $caratula = "default.png";
+        $categoriaClave = "gestion";
+        $url = "./path/example";
+        $fecha = "2025-10-10";
+        $nombreUsuario = "link";
+        
+        $stmt->execute([
+            "titulo_clave" => $tituloClave,
+            "titulo" => $titulo,
+            "descripcion" => $descripcion,
+            "autor" => $autor,
+            "caratula" => $caratula,
+            "categoria_clave" => $categoriaClave,
+            "url" => $url,
+            "fecha" => $fecha,
+            "nombre_usuario" => $nombreUsuario]);
+            
+        /*
+            $stmt->execute([
+            "titulo_clave" => $_POST['titulo_clave'],
+            "titulo" => $_POST['titulo'],
+            "descripcion" => $_POST['descripcion'],
+            "autor" => $_POST['autor'],
+            "caratula" => $_POST['caratula'],
+            "categoria_clave" => $_POST['categoria_clave'],
+            "url" => $_POST['url'],
+            "fecha" => $_POST['fecha'],
+            "nombre_usuario" => $nombreUsuario]);
+        */
+        $conn = null;
+    } catch(PDOException $e){
+        echo "<Mensaje de error:>" . $e->getMessage();
+    }
+    $conn = null;
+    return false;
+}

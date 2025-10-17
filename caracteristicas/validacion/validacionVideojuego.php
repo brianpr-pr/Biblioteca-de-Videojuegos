@@ -107,8 +107,8 @@ function caratulaValidacion(){
             throw new ErrorException('Fallo al editar el archivo.');   
     }
 
-    if($_FILES['imagen']['size'] > 1048576){
-        throw new ErrorException("Imagen es demasiado grande, máximo 1MB");
+    if($_FILES['imagen']['size'] > (1048576 * 3)){
+        throw new ErrorException("Imagen es demasiado grande, máximo 3MB");
     }
 
     if( ! in_array($_FILES['imagen']['type'], ['image/gif', "image/png" , "image/jpeg"])){
