@@ -137,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 if($_SESSION['nombreUsuario'] && $_SESSION['email'] && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
     $_SESSION['error'] = null;
     if($_SESSION['perfil']){
-        editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['perfil']);
+        editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_perfil']);
     } else{
         editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], "./perfil/default.png");
     }
