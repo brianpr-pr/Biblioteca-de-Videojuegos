@@ -130,7 +130,7 @@ function modificarVideojuego(){
             categoria_clave=:categoria_clave,
             url=:url,
             fecha=:fecha
-            WHERE titulo_clave = 'super-mario-plats'
+            WHERE titulo_clave = :titulo_clave
             AND nombre_usuario=:nombre_usuario
         ");
 
@@ -147,6 +147,7 @@ function modificarVideojuego(){
             "categoria_clave" => $_POST['categoria'],
             "url" => $url,
             "fecha" => $_POST['fecha'],
+            "titulo_clave" => $_POST['titulo_modificar'],
             "nombre_usuario" => $_SESSION['nombre_usuario']
         ]);
 

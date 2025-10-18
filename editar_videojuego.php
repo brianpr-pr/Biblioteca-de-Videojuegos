@@ -18,7 +18,7 @@ if($_GET['salir']){
 }
 
 if(!$_SESSION['nombre_usuario']){
-    header("Location: ./inicio_sesion.php?error=Es necesario que incie sesion antes de poder editar un videojuego");
+    header("Location: ./inicio_sesion.php?error=Es necesario que inicie sesión antes de poder editar un videojuego");
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -34,6 +34,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         $_GET['url'] = $datosVideojuego['url'];
         $_GET['fecha'] = $datosVideojuego['fecha'];
         $_GET['nombre_usuario'] = $datosVideojuego['nombre_usuario'];
+        $_GET['titulo_modificar'] = $datosVideojuego['titulo_clave'];
     } else{
         $_GET = null;
     }
@@ -162,6 +163,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <div>
             <!--Imagen Caratula-->
             <label for="imagen">Imagen de caratula</label>
+            <input type="text" name="titulo_modificar" value="<?php echo $_GET['titulo_modificar']; ?>" readonly style="display:none;">
             <input
                 id="imagen"
                 name="imagen"
@@ -196,8 +198,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </div>
 
 <?php
-
-//Comprobar que todo sea correcto en cuyo caso realizar update con los nuevos datos:
+//Información sobre el resultado de la actualización de datos:
 echo $feedback;
 
 include "./caracteristicas/utilidades/footer.php";
