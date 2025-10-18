@@ -134,18 +134,16 @@ function modificarVideojuego(){
             AND nombre_usuario=:nombre_usuario
         ");
 
-        $tituloClave = $_SESSION['nombre_usuario'] . " " . $_POST['titulo'];
-        $caratula = "{$_SESSION['nombre_usuario']}_".basename($_POST['url']);
-        $url = "./caratulas/$caratula";
+        $tituloClave = $_SESSION['nombre_usuario'] . "_" . $_POST['titulo'];
         
         $stmt->execute([
             "titulo_clave" => $tituloClave,
             "titulo" => $_POST['titulo'],
             "descripcion" => $_POST['descripcion'],
             "autor" => $_POST['autor'],
-            "caratula" => $caratula,
+            "caratula" => $_POST['caratula'],
             "categoria_clave" => $_POST['categoria'],
-            "url" => $url,
+            "url" => $_POST['url'],
             "fecha" => $_POST['fecha'],
             "titulo_clave" => $_POST['titulo_modificar'],
             "nombre_usuario" => $_SESSION['nombre_usuario']
@@ -201,18 +199,16 @@ $stmt = $conn->prepare("
             :nombre_usuario
         )");
 
-        $tituloClave = $_SESSION['nombre_usuario'] . " " . $_POST['titulo'];
-        $caratula = "{$_SESSION['nombre_usuario']}_".basename($_POST['url']);
-        $url = "./caratulas/$caratula";
+        $tituloClave = $_SESSION['nombre_usuario'] . "_" . $_POST['titulo'];
         
         $stmt->execute([
             "titulo_clave" => $tituloClave,
             "titulo" => $_POST['titulo'],
             "descripcion" => $_POST['descripcion'],
             "autor" => $_POST['autor'],
-            "caratula" => $caratula,
+            "caratula" => $_POST['caratula'],
             "categoria_clave" => $_POST['categoria'],
-            "url" => $url,
+            "url" => $_POST['url'],
             "fecha" => $_POST['fecha'],
             "nombre_usuario" => $_SESSION['nombre_usuario']
         ]);

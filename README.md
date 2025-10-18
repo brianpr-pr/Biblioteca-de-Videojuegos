@@ -19,3 +19,6 @@ Listado de errores o cosas a mejorar:
 
 
 10. Añadir que los usuarios que no hallan inciado sesión no puedan ver el listado de videojuegos ni el formulario para añadir nuevos videojuegos ni el icono de la cuenta de usuario. 
+
+
+11. Comprobar si se pueden subir imagenes con el mismo nombre.

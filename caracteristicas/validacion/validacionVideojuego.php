@@ -117,17 +117,18 @@ function caratulaValidacion(){
 
     $rutaLimpia = limpiarRuta($_FILES['imagen']);
     
-    if(file_exists($rutaLimpia)){
+    if(file_exists("./caratulas/" . $SESSION['nombre_usuario'] . basename($rutaLimpia) ) ){
         throw new ErrorException("Ya existe un archivo con este nombre.");
     }
+    $_POST['caratula'] = basename($rutaLimpia);
+    $_POST['url'] = "./caratulas/{$_SESSION['nombre_usuario']}_{$_POST['caratula']}";
 
-    if( ! move_uploaded_file($_FILES['imagen']['tmp_name'],  $rutaLimpia)){
+    if( ! move_uploaded_file($_FILES['imagen']['tmp_name'], $_POST['url']  ) ){
         throw new ErrorException("Fallo al mover el archivo");
     }
 
     if(file_exists($rutaLimpia)){
         $_POST['url'] = $rutaLimpia;
-        unlink($rutaLimpia);
     }
 
     return true;
@@ -138,4 +139,11 @@ function limpiarRuta($arrAsociativoImagen){
     $nombreLimpio = preg_replace("/[^\w-]/", "_", $pathInfo['filename']);
     $rutaLimpia = "./caratulas/{$nombreLimpio}.{$pathInfo['extension']}" ;
     return $rutaLimpia;
+}
+
+
+function eliminarCaratula($ruta){
+    if(file_exists($ruta)){
+        unlink($ruta);
+    }
 }

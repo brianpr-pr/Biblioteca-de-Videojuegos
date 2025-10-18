@@ -87,6 +87,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         modificarVideojuego();
         $feedback = "<h2>Consulta terminada de manera exitosa.</h2>";
     } else {
+        eliminarCaratula($_POST['url']);
         $feedback ="<h2>Error, no se puedo realizar consulta a la base de datos por validación de datos incorrecta.</h2><br>{$feedback}";
     }
 }
