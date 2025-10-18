@@ -10,11 +10,8 @@ Listado de errores o cosas a mejorar:
 
 7. Modificar include y cambiarlos por require_once en todos los imports. ademas de añadir un manejo de errores en caso de que no se encuentre ese archivo, con algún redireccionamiento a otra pagina.
 
-8. En validacionVideojuegos.php añadir que si ya existe en nuestro directorio una caratula con el mismo nombre que se lo cambie usando el nombre del directorio temporal:
 
 9. Ahora ya puedo hacer un update a la base de datos; Faltan por resolver las siguientes cuestiones:
 
-    url -> Deberia de asignar un valor a el array POST antes de hacer la llamada en caso de que todo sea correcto?
-
     caratulas -> utilizar algoritmo/función para evitar que halla nombre repetidos
-    (Recordar que el usuairo puede añadir un videojuego sin caratula.)
+    (Recordar que el usuario puede añadir un videojuego sin caratula.)

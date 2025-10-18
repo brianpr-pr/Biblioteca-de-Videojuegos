@@ -9,7 +9,10 @@ require "./caracteristicas/servidor/administrarVideojuegos.php";
 require "./caracteristicas/validacion/validacionVideojuego.php";
 
 include_once "./caracteristicas/usuario/usuario.php";
-
+// Variable para comprobar que la enviar la solicitud POST se hallan superado 
+// Todas las validaciones.
+$test = true;
+$feedback = '';
 if($_GET['salir']){
     salirUsuario();
 }
@@ -39,35 +42,41 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $test = true;
+    
     if(!tituloValidacion($_POST['titulo'], $_SESSION['nombre_usuario'])){
         $_GET['titulo'] = null;
         $test = false;
+        $feedback = "<h2>Titulo incorrecto</h2><br>";
     }
 
     if(!autorValidacion($_POST['autor'])){
         $_GET['autor'] = null;
         $test = false;
+        $feedback = "<h2>Autor incorrecto</h2><br>";
     }
 
     if(!descripcionValidacion($_POST['descripcion'])){
         $_GET['descripcion'] = null;
         $test = false;
+        $feedback = "<h2>Descripción incorrecta</h2><br>";
     }
 
     if(!categoriaValidacion($_POST['categoria'])){
         $_GET['categoria'] = null;
         $test = false;
+        $feedback = "<h2>Categoria incorrecta</h2><br>";
     }
 
     if(!fechaValidacion($_POST['fecha'])){
         $_GET['fecha'] = null;
         $test = false;
+        $feedback = "<h2>Fecha incorrecta</h2><br>";
     }
 
     try {
         if(!caratulaValidacion()){
             $test = false;
+            $feedback = "<h2>Caratula incorrecta</h2><br>";
         }
     } catch(Exception $e){
         echo "<br><h1>" . $e->getMessage() . "</h1>";
@@ -75,11 +84,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if($test){
         modificarVideojuego();
-        echo "Consulta terminada. <br>Valor de post url: {$_POST['url']}";
-    } else{
-        echo "<h2>Error, no se puedo realizar consulta a la base de datos por validación de datos incorrecta.</h2>";
+        $feedback = "<h2>Consulta terminada de manera exitosa.</h2>";
+    } else {
+        $feedback ="<h2>Error, no se puedo realizar consulta a la base de datos por validación de datos incorrecta.</h2><br>{$feedback}";
     }
 }
+
 ?>
 
 <div style="margin-left: 25px;">
@@ -188,6 +198,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <?php
 
 //Comprobar que todo sea correcto en cuyo caso realizar update con los nuevos datos:
-
+echo $feedback;
 
 include "./caracteristicas/utilidades/footer.php";

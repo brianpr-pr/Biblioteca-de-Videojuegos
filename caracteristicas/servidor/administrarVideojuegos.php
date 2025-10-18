@@ -135,8 +135,8 @@ function modificarVideojuego(){
         ");
 
         $tituloClave = $_SESSION['nombre_usuario'] . " " . $_POST['titulo'];
-        $caratula = "default.png"; 
-        $url = "./caratulas/{$_POST['caratula']}";
+        $caratula = "{$_SESSION['nombre_usuario']}_".basename($_POST['url']);
+        $url = "./caratulas/$caratula";
         
         $stmt->execute([
             "titulo_clave" => $tituloClave,
