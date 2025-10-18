@@ -9,18 +9,17 @@ include "./caracteristicas/validacion/validacionUsuario.php";
 if(!$_SESSION['nombre_usuario']){
     header("Location: ./inicio_sesion.php");
 }
+
 $datosUsuario = getDatosUsuario($_SESSION['nombre_usuario']);
 $_SESSION['email'] = $datosUsuario['email'];
-//$_SESSION['imagen_perfil'] = $datosUsuario['imagen_perfil'];
-//echo $_SESSION['email'];
-
+$_SESSION['imagen_anterior'] = $datosUsuario['imagen_perfil']; 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if(!nombreUsuarioValidacion($_POST['nombreUsuario']) 
-        && $_SESSION['nombre_usuario'] !== $_POST['nombreUsuario']){
-        $_SESSION['nombreUsuario'] = null;
+
+    if(!nombreUsuarioValidacion($_POST['nombre_usuario']) 
+        && $_SESSION['nombre_usuario'] !== $_POST['nombre_usuario']){
         $_SESSION['error'] = "{$_SESSION['error']}<h2>Nombre de usuario es invalido, por favor ingrese un nombre de usuario valido.</h2><br>";
     } else {
-        $_SESSION['nombre_usuario'] = $_POST['nombreUsuario'];
+        $_SESSION['nombre_usuario'] = $_POST['nombre_usuario'];
     }
 
     if(contraseñaValidacion($_POST['contraseñaUno'],$_POST['contraseñaDos'])){
@@ -32,12 +31,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $_SESSION['error'] = "{$_SESSION['error']}<h2>Las contraseñas no coinciden porfavor ingreselas de nuevo.</h2><br>";
     }
     
-    if(perfilValidacion()){
-       $_SESSION['imagen_perfil'] = $_POST['imagen'];
+    try{
+        if(perfilValidacion()){
+            $_SESSION['imagen_perfil'] = $_POST['imagen'];
+        } else{
+            $_SESSION['imagen_perfil'] = null;
+        }
+    } catch(Exception $e){
+        $_SESSION['imagen_perfil'] = null;
     }
 
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
 }
 ?>
 
@@ -47,13 +50,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <h2>Editar datos del perfil</h2>
         <br>
         <!-- Nombre de usuario -->
-        <label for="nombreUsuario">Nombre usuario</label>
+        <label for="nombre_usuario">Nombre usuario</label>
         <br>
         <input
             placeholder="Ingrese su nombre de usuario." 
             type="text"
-            name="nombreUsuario"
-            id="nombreUsuario"
+            name="nombre_usuario"
+            id="nombre_usuario"
             value="<?php echo $_SESSION['nombre_usuario'] ?? ''; ?>"
             required
             minlength="3"
@@ -72,7 +75,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             id="email"
             value="<?php echo $_SESSION['email'] ?? ''; ?>"
             required
-            readonly
             minlength="3"
             maxlength="40"
             title="Introduce un correo electrónico válido">
@@ -84,7 +86,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             type="password"
             name="contraseñaUno"
             id="contraseñaUno"
-            
+            required
             required
             minlength="8"
             maxlength="20"
@@ -110,7 +112,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             id="imagen"
             name="imagen"
             type="file"
-            accept="image/jpeg, image/png, image/gif"
             title="Solo se aceptan archivos de tamaño maximo: 3MB; tipo: png, jpeg, gif;"
         />
         <br><br>
@@ -121,19 +122,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 <?php
-if($_SESSION['nombreUsuario']  && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
+if($_SESSION['nombre_usuario']  && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
     $_SESSION['error'] = null;
     if($_SESSION['imagen_perfil']){
-        editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_perfil']);
+        editarUsuario($_SESSION['nombre_usuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_perfil']);
     } else{
-        editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], "./perfil/default.png");
+        editarUsuario($_SESSION['nombre_usuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_anterior']);
     }
     echo "Usuario se ha editado correctamente.";
     
-    $_SESSION['nombreUsuario'] = null;
     $_SESSION['contraseñaUno'] = null;
     $_SESSION['contraseñaDos'] = null;
-    $_SESSION['imagen_perfil'] = null;
     //header(header: "Location: ./iniciado.php");
 } else{
     echo "Usuario no se ha editado.";

@@ -127,7 +127,6 @@ function perfilValidacion(){
         return true;
     }
 
-    echo var_dump($_FILES['imagen']);
 
     switch($_FILES['imagen']['error']){
         case UPLOAD_ERR_PARTIAL:
@@ -203,7 +202,7 @@ function getDatosUsuario($nombreUsuario) {
     try {
         $pdo = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $stmt = $pdo->prepare("SELECT nombre_usuario, email, imagen_perfil FROM usuarios WHERE nombre_usuario LIKE :nombre_usuario");
+        $stmt = $pdo->prepare("SELECT nombre_usuario, email, imagen_perfil FROM usuarios WHERE nombre_usuario=:nombre_usuario");
         $stmt->execute([':nombre_usuario' => $nombreUsuario]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
