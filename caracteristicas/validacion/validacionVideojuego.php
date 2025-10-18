@@ -126,6 +126,7 @@ function caratulaValidacion(){
     }
 
     if(file_exists($rutaLimpia)){
+        $_POST['url'] = $rutaLimpia;
         unlink($rutaLimpia);
     }
 

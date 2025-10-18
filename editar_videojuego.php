@@ -27,7 +27,6 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         $_GET['titulo'] = $datosVideojuego['titulo'];
         $_GET['autor'] = $datosVideojuego['autor'];
         $_GET['descripcion'] = $datosVideojuego['descripcion'];
-        $_GET['caratula'] = $datosVideojuego['caratula'];
         $_GET['categoria_clave'] = $datosVideojuego['categoria_clave'];
         $_GET['url'] = $datosVideojuego['url'];
         $_GET['fecha'] = $datosVideojuego['fecha'];
@@ -68,7 +67,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     try {
         if(!caratulaValidacion()){
-            $_GET['caratula'] = null;
             $test = false;
         }
     } catch(Exception $e){
@@ -77,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     if($test){
         modificarVideojuego();
-        echo "Consulta terminada.";
+        echo "Consulta terminada. <br>Valor de post url: {$_POST['url']}";
     } else{
         echo "<h2>Error, no se puedo realizar consulta a la base de datos por validación de datos incorrecta.</h2>";
     }
@@ -152,18 +150,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </div>
         <br><br>
         <div>
-            <!--Caratula-->
-            <label for="caratula">Nombre de archivo</label>
-            <input 
-                value="<?php echo $_GET['caratula']; ?>"
-                name="caratula" 
-                id="caratula" 
-                type="text"
-                maxlength="45"
-                pattern="[A-Za-z0-9_. ]{0,45}"
-                title="Solo se admiten letras, números, guiones bajos y puntos (máximo 45)"
-            />
-            <br><br>
+            <!--Imagen Caratula-->
             <label for="imagen">Imagen de caratula</label>
             <input
                 id="imagen"

@@ -130,14 +130,13 @@ function modificarVideojuego(){
             categoria_clave=:categoria_clave,
             url=:url,
             fecha=:fecha
-            WHERE titulo_clave = 'fifa14-deportes'
+            WHERE titulo_clave = 'super-mario-plats'
             AND nombre_usuario=:nombre_usuario
         ");
 
-        $tituloClave = "TituloClaveTest"; 
-        $caratula = "default.png";
-        $url = "./caratulas/";
-        $nombreUsuario = "link";
+        $tituloClave = $_SESSION['nombre_usuario'] . " " . $_POST['titulo'];
+        $caratula = "default.png"; 
+        $url = "./caratulas/{$_POST['caratula']}";
         
         $stmt->execute([
             "titulo_clave" => $tituloClave,
@@ -148,21 +147,9 @@ function modificarVideojuego(){
             "categoria_clave" => $_POST['categoria'],
             "url" => $url,
             "fecha" => $_POST['fecha'],
-            "nombre_usuario" => $nombreUsuario
+            "nombre_usuario" => $_SESSION['nombre_usuario']
         ]);
 
-        /*
-            $stmt->execute([
-            "titulo_clave" => $_POST['titulo_clave'],
-            "titulo" => $_POST['titulo'],
-            "descripcion" => $_POST['descripcion'],
-            "autor" => $_POST['autor'],
-            "caratula" => $_POST['caratula'],
-            "categoria_clave" => $_POST['categoria_clave'],
-            "url" => $_POST['url'],
-            "fecha" => $_POST['fecha'],
-            "nombre_usuario" => $nombreUsuario]);
-        */
         $conn = null;
     } catch(PDOException $e){
         echo "<Mensaje de error:>" . $e->getMessage();
