@@ -158,3 +158,71 @@ function modificarVideojuego(){
     $conn = null;
     return false;
 }
+
+
+
+
+
+function añadirVideojuego(){
+try{
+        require "./caracteristicas/servidor/datos_servidor.php";
+
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        
+/*
+$stmt = $conn->prepare("
+            INSERT INTO videojuegos VALUES
+            (titulo_clave=:titulo_clave,
+            titulo=:titulo,
+            descripcion=:descripcion,
+            autor=:autor,
+            caratula=:caratula,
+            categoria_clave=:categoria_clave,
+            url=:url,
+            fecha=:fecha
+        )");
+*/
+
+
+        $stmt = $conn->prepare("
+            INSERT INTO videojuegos (
+            titulo_clave, titulo, descripcion, autor, caratula,
+            categoria_clave, url, fecha, nombre_usuario
+            )
+            VALUES
+            (:titulo_clave,
+            :titulo,
+            :descripcion,
+            :autor,
+            :caratula,
+            :categoria_clave,
+            :url,
+            :fecha,
+            :nombre_usuario
+        )");
+
+        $tituloClave = $_SESSION['nombre_usuario'] . " " . $_POST['titulo'];
+        $caratula = "{$_SESSION['nombre_usuario']}_".basename($_POST['url']);
+        $url = "./caratulas/$caratula";
+        
+        $stmt->execute([
+            "titulo_clave" => $tituloClave,
+            "titulo" => $_POST['titulo'],
+            "descripcion" => $_POST['descripcion'],
+            "autor" => $_POST['autor'],
+            "caratula" => $caratula,
+            "categoria_clave" => $_POST['categoria'],
+            "url" => $url,
+            "fecha" => $_POST['fecha'],
+            "nombre_usuario" => $_SESSION['nombre_usuario']
+        ]);
+
+        $conn = null;
+    } catch(PDOException $e){
+        echo "<Mensaje de error:>" . $e->getMessage();
+    }
+    $conn = null;
+    return false;
+
+
+}

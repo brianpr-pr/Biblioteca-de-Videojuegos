@@ -21,55 +21,35 @@ if(!$_SESSION['nombre_usuario']){
     header("Location: ./inicio_sesion.php?error=Es necesario que inicie sesión antes de poder editar un videojuego");
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'GET'){
-    if(array_key_exists('titulo_clave', $_GET)){
-        $datosVideojuego = videojuegoDatos($_GET['titulo_clave']);
-    }
-
-    if($datosVideojuego['nombre_usuario'] === $_SESSION['nombre_usuario']){
-        $_GET['titulo'] = $datosVideojuego['titulo'];
-        $_GET['autor'] = $datosVideojuego['autor'];
-        $_GET['descripcion'] = $datosVideojuego['descripcion'];
-        $_GET['categoria_clave'] = $datosVideojuego['categoria_clave'];
-        $_GET['url'] = $datosVideojuego['url'];
-        $_GET['fecha'] = $datosVideojuego['fecha'];
-        $_GET['nombre_usuario'] = $datosVideojuego['nombre_usuario'];
-        $_GET['titulo_modificar'] = $datosVideojuego['titulo_clave'];
-    } else{
-        $_GET = null;
-    }
-} else{
-    $_GET = null;
-}
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     if(!tituloValidacion($_POST['titulo'], $_SESSION['nombre_usuario'])){
-        $_GET['titulo'] = null;
+        $_POST['titulo'] = null;
         $test = false;
         $feedback = "<h2>Titulo incorrecto</h2><br>";
     }
 
     if(!autorValidacion($_POST['autor'])){
-        $_GET['autor'] = null;
+        $_POST['autor'] = null;
         $test = false;
         $feedback = "<h2>Autor incorrecto</h2><br>";
     }
 
     if(!descripcionValidacion($_POST['descripcion'])){
-        $_GET['descripcion'] = null;
+        $_POST['descripcion'] = null;
         $test = false;
         $feedback = "<h2>Descripción incorrecta</h2><br>";
     }
 
     if(!categoriaValidacion($_POST['categoria'])){
-        $_GET['categoria'] = null;
+        $_POST['categoria'] = null;
         $test = false;
         $feedback = "<h2>Categoria incorrecta</h2><br>";
     }
 
     if(!fechaValidacion($_POST['fecha'])){
-        $_GET['fecha'] = null;
+        $_POST['fecha'] = null;
         $test = false;
         $feedback = "<h2>Fecha incorrecta</h2><br>";
     }
@@ -84,7 +64,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 
     if($test){
-        modificarVideojuego();
+        añadirVideojuego();
         $feedback = "<h2>Consulta terminada de manera exitosa.</h2>";
     } else {
         $feedback ="<h2>Error, no se puedo realizar consulta a la base de datos por validación de datos incorrecta.</h2><br>{$feedback}";
@@ -101,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             <!-- Titulo videojuego-->
             <label for="titulo">Título</label>
             <input
-                value="<?php echo $_GET['titulo']; ?>"
+                value="<?php echo $_POST['titulo']; ?>"
                 placeholder="Ingrese un titulo"
                 name="titulo" 
                 id="titulo" 
@@ -116,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             <!-- Autor videojuego-->
             <label for="autor">Autor</label>
             <input
-                value="<?php echo $_GET['autor'] ?? ''; ?>"
+                value="<?php echo $_POST['autor'] ?? ''; ?>"
                 placeholder="Ingrese el autor"
                 name="autor"
                 id="autor"
@@ -145,7 +125,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             pattern="[A-Za-z0-9_. ]{3,100}"
             title="Solo se admiten letras, números, guiones bajos, puntos y espacios en blanco 
             (mínimo 3 caracteres, máximo 100)
-        "><?php echo $_GET['descripcion'] ?? ''; ?></textarea>
+        "><?php echo $_POST['descripcion'] ?? ''; ?></textarea>
         <br><br>
         <div>
             <!--Categoria-->
@@ -156,14 +136,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             <!--Fecha-->
             <label for="fecha">Fecha</label>
             <input 
-            value="<?php echo $_GET['fecha']; ?>"
+            value="<?php echo $_POST['fecha']; ?>"
             name="fecha" id="fecha" type="date"/>
         </div>
         <br><br>
         <div>
             <!--Imagen Caratula-->
             <label for="imagen">Imagen de caratula</label>
-            <input type="text" name="titulo_modificar" value="<?php echo $_GET['titulo_modificar']; ?>" readonly style="display:none;">
             <input
                 id="imagen"
                 name="imagen"
@@ -172,13 +151,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 title="Solo se aceptan archivos de tamaño maximo: 1MB; tipo: png, jpeg, gif;"
             />
         </div>
-        <br><br>
-        <label for="nombre_usuario">Subido por</label>
-        <input
-        readonly
-        value="<?php echo $_GET['nombre_usuario']; ?>"
-        name="nombre_usuario" id="nombre_usuario" 
-        type="text" />
         <br><br>
         <div>
             <button name="" value="" type="submit">Guardar cambios</button>
@@ -200,5 +172,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <?php
 //Información sobre el resultado de la actualización de datos:
 echo $feedback;
+
+echo "<h1>" . var_dump($_POST) . var_dump($_SESSION) ."</h1>";
 
 include "./caracteristicas/utilidades/footer.php";
