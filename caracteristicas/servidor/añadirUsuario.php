@@ -27,3 +27,30 @@ try {
         echo "{$e->getMessage()}<br>{$errorMensaje}";
     }
 }
+
+
+function editarUsuario($nombreUsuario,$emailUsuario, $contraseñaUsuario, $imagenPerfil){
+    try {
+        include "./caracteristicas/servidor/datos_servidor.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", 
+        $username, 
+        $password);
+        // set the PDO error mode to exception
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $conn->prepare("UPDATE usuarios SET 
+        nombre_usuario=:nombre_usuario,
+        passwrd=:passwrd, 
+        imagen_perfil=:imagen_perfil WHERE email=:email");
+        $passwrd = password_hash($contraseñaUsuario, PASSWORD_DEFAULT);
+
+        $stmt->execute([
+            'nombre_usuario' => $nombreUsuario,
+            'email' => $emailUsuario, 
+            'passwrd' => $passwrd,
+            'imagen_perfil'=> $imagenPerfil
+        ]);
+    } catch(PDOException $e) {
+        echo "{$e->getMessage()}<br>{$errorMensaje}";
+    }
+}

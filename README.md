@@ -32,9 +32,8 @@ Listado de errores o cosas a mejorar:
 ///// PARTE IMPORTANTE QUE CUENTA PARA NOTA PRIORIDAD MAXIMA:
 
 
-
 2. Agregar icono de cuenta en la parte superior derecha de la pagina,
-en la que se encuentra la opción de cerrar sesión y link a editar datos del usuario, menos el email.
+la cual dispone de la opción de cerrar sesión y link a pagina para editar datos del usuario, menos el email.
 
 3. Crear vista de estadísticas para ver visualizaciones de nuestros videojuegos.
 

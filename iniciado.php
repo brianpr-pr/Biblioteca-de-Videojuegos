@@ -21,7 +21,7 @@ if(!$_SESSION['nombre_usuario']){
     <?php endif; ?>
 </div>
 
-
+<a href="./editar_usuario.php">Editar datos del perfil</a>
 <?php 
 
 if($_GET['salir']){

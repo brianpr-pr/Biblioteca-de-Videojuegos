@@ -195,3 +195,25 @@ function eliminarCaratula($ruta){
         unlink($ruta);
     }
 }
+
+
+
+function getDatosUsuario(){
+    try {
+        include "./caracteristicas/servidor/datos_servidor.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        // Preparacion sentencias SQL
+        $stmt = $conn->prepare("SELECT nombre_usuario, email, imagen_perfil  FROM usuarios WHERE nombre_usuario=:nombre_usuario");
+        $stmt->execute(["nombre_usuario" => $_SESSION['nombre_usuario']]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row){
+            $conn = null;
+            return $row;
+        }
+    } catch(PDOException $e) {
+        echo "<br>" . $e->getMessage();
+    }
+
+    $conn = null;
+    return false;
+}
