@@ -9,6 +9,7 @@ try {
     // Contraseña base
     $passwordPlano = "1234567890a";
     $passwordHash = password_hash($passwordPlano, PASSWORD_DEFAULT);
+    $imagenPerfil = "./perfil/default.png"; 
 
     // Lista de usuarios para insertar
     $usuarios = [
@@ -25,14 +26,15 @@ try {
     ];
 
     // Preparar sentencia
-    $stmt = $conn->prepare("INSERT INTO usuarios (nombre_usuario, email, passwrd) VALUES (:nombre, :email, :pass)");
+    $stmt = $conn->prepare("INSERT INTO usuarios (nombre_usuario, email, passwrd, imagen_perfil) VALUES (:nombre, :email, :pass, :imagen_perfil)");
 
     // Insertar todos los usuarios
     foreach ($usuarios as $u) {
         $stmt->execute([
             ':nombre' => $u['nombre_usuario'],
             ':email'  => $u['email'],
-            ':pass'   => $passwordHash
+            ':pass'   => $passwordHash,
+            ':imagen_perfil' => $imagenPerfil
         ]);
     }
 

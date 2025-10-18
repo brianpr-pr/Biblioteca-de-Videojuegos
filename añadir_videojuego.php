@@ -149,7 +149,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 name="imagen"
                 type="file"
                 accept="image/jpeg, image/png, image/gif"
-                title="Solo se aceptan archivos de tamaño maximo: 1MB; tipo: png, jpeg, gif;"
+                title="Solo se aceptan archivos de tamaño maximo: 4MB; tipo: png, jpeg, gif;"
             />
         </div>
         <br><br>

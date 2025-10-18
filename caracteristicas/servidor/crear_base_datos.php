@@ -14,7 +14,8 @@ try {
     $sentenciaDos = "CREATE TABLE usuarios (
     nombre_usuario varchar(35) PRIMARY KEY,
     email varchar(40) UNIQUE NOT NULL, 
-    passwrd varchar(100) NOT NULL)";
+    passwrd varchar(100) NOT NULL,
+    imagen_perfil varchar(85) NULL)";
 
     $sentenciaTres = "CREATE TABLE categorias (
     categoria_clave varchar(30) PRIMARY KEY,

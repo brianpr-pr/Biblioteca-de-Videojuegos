@@ -104,3 +104,94 @@ function inicioSesion($emailUsuario, $contraseña){
         }
     return false;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function perfilValidacion(){
+    if($_FILES['imagen']['name'] == ''){
+        return true;
+    }
+
+    echo var_dump($_FILES['imagen']);
+
+    switch($_FILES['imagen']['error']){
+        case UPLOAD_ERR_PARTIAL:
+            throw new ErrorException("Archivo subido parcialmente");
+
+        case UPLOAD_ERR_NO_FILE:
+            throw new ErrorException('El archivo no fue subido correctamente');
+
+        case UPLOAD_ERR_EXTENSION:
+            throw new ErrorException('El archivo no fue subido, tiene una extension no admitida');
+        
+        case UPLOAD_ERR_FORM_SIZE:
+            throw new ErrorException('El archivo excede el limite en tamaño impuesto en el formulario HTML (MAX_FILE_SIZE).');
+        
+        case UPLOAD_ERR_INI_SIZE:
+            throw new ErrorException('El archivo excede el limite en tamaño impuesto en el archivo de configuración php.ini (upload_max_filesize).');
+        case UPLOAD_ERR_NO_TMP_DIR:
+            throw new ErrorException('Directorio temporal no encotrado.');
+        case UPLOAD_ERR_CANT_WRITE:
+            throw new ErrorException('Fallo al editar el archivo.');   
+    }
+
+    
+
+    if($_FILES['imagen']['size'] > (1048576 * 3)){
+        throw new ErrorException("Imagen es demasiado grande, máximo 3MB");
+    }
+
+    if( ! in_array($_FILES['imagen']['type'], ['image/gif', "image/png" , "image/jpeg"])){
+        throw new ErrorException("Formato de imagen invalido: " . var_dump($_FILES['imagen']) );
+    }
+
+    
+
+    $rutaLimpia = limpiarRuta($_FILES['imagen']);
+
+    if(file_exists("./perfil/" . $_SESSION['nombre_usuario'] . basename($rutaLimpia) ) ){
+        throw new ErrorException("Ya existe un archivo con este nombre.");
+    }
+
+    
+    $_POST['imagen'] = "./perfil/{$_SESSION['nombre_usuario']}_" . basename($rutaLimpia);
+
+
+    if( ! move_uploaded_file($_FILES['imagen']['tmp_name'], $_POST['imagen']  ) ){
+        throw new ErrorException("Fallo al mover el archivo");
+    }
+
+    if(!file_exists($_POST['imagen'])){
+        throw new ErrorException("Error, el archivo no se encuentra en el directorio de destino.");
+    }
+
+    return true;
+}
+
+function limpiarRuta($arrAsociativoImagen){
+    $pathInfo = pathinfo($arrAsociativoImagen['name']);
+    $nombreLimpio = preg_replace("/[^\w-]/", "_", $pathInfo['filename']);
+    $rutaLimpia = "./perfil/{$nombreLimpio}.{$pathInfo['extension']}" ;
+    return $rutaLimpia;
+}
+
+function eliminarCaratula($ruta){
+    if(file_exists($ruta)){
+        unlink($ruta);
+    }
+}

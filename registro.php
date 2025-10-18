@@ -35,13 +35,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $_SESSION['contraseñaDos'] = null;
         $_SESSION['error'] = "{$_SESSION['error']}<h2>Las contraseñas no coinciden porfavor ingreselas de nuevo.</h2><br>";
     }
+
+    
+    if(perfilValidacion()){
+        $_SESSION['perfil'] = $_POST['imagen'];
+    } else{
+        $_SESSION['perfil'] = null;
+        $_SESSION['error'] = "{$_SESSION['error']}<h2>Error en la subida de la imagen.</h2><br>";
+    }
+
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 ?>
 
 <div>
-    <form accept="utf-8" method="POST">
+    <form accept="utf-8" method="POST" enctype="multipart/form-data">
         <h2>Registro</h2>
         <br>
         <!-- Nombre de usuario -->
@@ -102,6 +111,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             pattern="[A-Za-z0-9]{8,20}"
             title="Debe coincidir con la contraseña anterior">
         <br><br>
+        <!--Imagen Caratula-->
+        <label for="imagen">Imagen de perfil</label>
+        <input
+            id="imagen"
+            name="imagen"
+            type="file"
+            accept="image/jpeg, image/png, image/gif"
+            title="Solo se aceptan archivos de tamaño maximo: 3MB; tipo: png, jpeg, gif;"
+        />
+        <br><br>
         <!-- Botón de envío -->
         <button type="submit">Enviar</button>
     </form>    
@@ -110,11 +129,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <?php
 if($_SESSION['nombreUsuario'] && $_SESSION['email'] && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
     $_SESSION['error'] = null;
-    añadirUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno']);
+    if($_SESSION['perfil']){
+        añadirUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['perfil']);
+    } else{
+        añadirUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], "./perfil/default.png");
+    }
+    
     $_SESSION['nombreUsuario'] = null;
     $_SESSION['email'] = null;
     $_SESSION['contraseñaUno'] = null;
     $_SESSION['contraseñaDos'] = null;
+    $_SESSION['perfil'] = null;
     header(header: "Location: ./inicio_sesion.php");
 } else{
     echo $_SESSION['error'];
