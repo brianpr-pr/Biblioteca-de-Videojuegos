@@ -10,6 +10,10 @@ include_once "./caracteristicas/usuario/usuario.php";
 if($_GET['salir']){
     salirUsuario();
 }
+
+if(!$_SESSION['nombre_usuario']){
+    header("Location: ./inicio_sesion.php?error=Es necesario que inicie sesión antes de poder ver la colección de videojuegos");
+}
 ?>
 
 <h2>Colección de videojuegos</h2>
