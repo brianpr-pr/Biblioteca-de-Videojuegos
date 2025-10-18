@@ -135,26 +135,22 @@ function modificarVideojuego(){
         ");
 
         $tituloClave = "TituloClaveTest"; 
-        $titulo = "Titulo";
-        $descripcion = "Descripcion";
-        $autor = "Brian";
         $caratula = "default.png";
-        $categoriaClave = "gestion";
-        $url = "./path/example";
-        $fecha = "2025-10-10";
+        $url = "./caratulas/";
         $nombreUsuario = "link";
         
         $stmt->execute([
             "titulo_clave" => $tituloClave,
-            "titulo" => $titulo,
-            "descripcion" => $descripcion,
-            "autor" => $autor,
+            "titulo" => $_POST['titulo'],
+            "descripcion" => $_POST['descripcion'],
+            "autor" => $_POST['autor'],
             "caratula" => $caratula,
-            "categoria_clave" => $categoriaClave,
+            "categoria_clave" => $_POST['categoria'],
             "url" => $url,
-            "fecha" => $fecha,
-            "nombre_usuario" => $nombreUsuario]);
-            
+            "fecha" => $_POST['fecha'],
+            "nombre_usuario" => $nombreUsuario
+        ]);
+
         /*
             $stmt->execute([
             "titulo_clave" => $_POST['titulo_clave'],

@@ -66,17 +66,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $test = false;
     }
 
-    try{
+    try {
         if(!caratulaValidacion()){
             $_GET['caratula'] = null;
             $test = false;
         }
-    }catch(Exception $e){
+    } catch(Exception $e){
         echo "<br><h1>" . $e->getMessage() . "</h1>";
     }
 
     if($test){
-        echo "<h1>Todo correcto</h1>";
+        modificarVideojuego();
+        echo "Consulta terminada.";
+    } else{
+        echo "<h2>Error, no se puedo realizar consulta a la base de datos por validación de datos incorrecta.</h2>";
     }
 }
 ?>
