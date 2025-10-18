@@ -198,22 +198,16 @@ function eliminarCaratula($ruta){
 
 
 
-function getDatosUsuario(){
+function getDatosUsuario($nombreUsuario) {
+    include './caracteristicas/servidor/datos_servidor.php';
     try {
-        include "./caracteristicas/servidor/datos_servidor.php";
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        // Preparacion sentencias SQL
-        $stmt = $conn->prepare("SELECT nombre_usuario, email, imagen_perfil  FROM usuarios WHERE nombre_usuario=:nombre_usuario");
-        $stmt->execute(["nombre_usuario" => $_SESSION['nombre_usuario']]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($row){
-            $conn = null;
-            return $row;
-        }
-    } catch(PDOException $e) {
-        echo "<br>" . $e->getMessage();
+        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmt = $pdo->prepare("SELECT nombre_usuario, email, imagen_perfil FROM usuarios WHERE nombre_usuario LIKE :nombre_usuario");
+        $stmt->execute([':nombre_usuario' => $nombreUsuario]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return false;
     }
-
-    $conn = null;
-    return false;
 }

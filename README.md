@@ -42,5 +42,6 @@ si nos gusta o no. esto se enviara mediante petición ajax.
 
 5. Crear check para autologgear al usuario mediante cookies.
 
+6. Reforzar validación de passsword en backend.
 
 IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.

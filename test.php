@@ -12,14 +12,8 @@ if(!$_SESSION['nombre_usuario']){
 }
 
 
-if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-    $datosUsuario = getDatosUsuario();
-    $_SESSION['email'] = $datosUsuario['email'];
-    $_SESSION['imagen_perfil'] = $datosUsuario['imagen_perfil'];
-}
-
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
     if(!nombreUsuarioValidacion($_POST['nombreUsuario']) 
         && $_SESSION['nombre_usuario'] !== $_POST['nombreUsuario']){
         $_SESSION['nombreUsuario'] = null;
@@ -134,24 +128,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 <?php
-if($_SESSION['nombreUsuario'] && $_SESSION['email'] && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
-    $_SESSION['error'] = null;
-    if($_SESSION['perfil']){
-        editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_perfil']);
-    } else{
-        editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], "./perfil/default.png");
-    }
-    echo "Usuario se ha editado correctamente.";
-    
-    $_SESSION['nombreUsuario'] = null;
-    $_SESSION['email'] = null;
-    $_SESSION['contraseñaUno'] = null;
-    $_SESSION['contraseñaDos'] = null;
-    $_SESSION['imagen_perfil'] = null;
-    //header(header: "Location: ./iniciado.php");
-} else{
-    echo "Usuario no se ha editado.";
-    echo $_SESSION['error'];
-    $_SESSION['error'] = null;
-}
+echo $_SESSION['nombre_usuario'] . $_SESSION['email'] . $_SESSION['contraseñaUno'] . $_SESSION['contraseñaDos']."<br>";
+editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_perfil']);
 include "./caracteristicas/utilidades/footer.php";

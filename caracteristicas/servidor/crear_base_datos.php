@@ -31,8 +31,10 @@ try {
     url varchar(125) NOT NULL,
     fecha date NOT NULL, 
     nombre_usuario varchar(35),
-    FOREIGN KEY (categoria_clave) REFERENCES categorias(categoria_clave),
-    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario))";
+    FOREIGN KEY (categoria_clave) REFERENCES categorias(categoria_clave)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE ON UPDATE CASCADE)";
 
     $conn->exec($sentenciaUno);
     $conn->exec($sentenciaDos);

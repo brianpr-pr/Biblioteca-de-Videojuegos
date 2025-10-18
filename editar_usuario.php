@@ -6,18 +6,13 @@ $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/servidor/añadirUsuario.php";
 include "./caracteristicas/validacion/validacionUsuario.php";
-
 if(!$_SESSION['nombre_usuario']){
     header("Location: ./inicio_sesion.php");
 }
-
-
-if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-    $datosUsuario = getDatosUsuario();
-    $_SESSION['email'] = $datosUsuario['email'];
-    $_SESSION['imagen_perfil'] = $datosUsuario['imagen_perfil'];
-}
-
+$datosUsuario = getDatosUsuario($_SESSION['nombre_usuario']);
+$_SESSION['email'] = $datosUsuario['email'];
+//$_SESSION['imagen_perfil'] = $datosUsuario['imagen_perfil'];
+//echo $_SESSION['email'];
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!nombreUsuarioValidacion($_POST['nombreUsuario']) 
@@ -25,16 +20,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $_SESSION['nombreUsuario'] = null;
         $_SESSION['error'] = "{$_SESSION['error']}<h2>Nombre de usuario es invalido, por favor ingrese un nombre de usuario valido.</h2><br>";
     } else {
-        $_SESSION['nombreUsuario'] = $_POST['nombreUsuario'];
-    }
-
-//Estoy modificando esto .....
-    if(!emailValidacion( $_POST['email']) 
-        &&  $_SESSION['email'] !== $_POST['email']){
-        $_SESSION['email'] = null;
-        $_SESSION['error'] = "{$_SESSION['error']}<h2>Email es invalido, por favor ingrese un email valido.</h2><br>";
-    } else{
-        $_SESSION['email'] = $_POST['email'];
+        $_SESSION['nombre_usuario'] = $_POST['nombreUsuario'];
     }
 
     if(contraseñaValidacion($_POST['contraseñaUno'],$_POST['contraseñaDos'])){
@@ -86,6 +72,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             id="email"
             value="<?php echo $_SESSION['email'] ?? ''; ?>"
             required
+            readonly
             minlength="3"
             maxlength="40"
             title="Introduce un correo electrónico válido">
@@ -134,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 <?php
-if($_SESSION['nombreUsuario'] && $_SESSION['email'] && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
+if($_SESSION['nombreUsuario']  && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){
     $_SESSION['error'] = null;
     if($_SESSION['imagen_perfil']){
         editarUsuario($_SESSION['nombreUsuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_perfil']);
@@ -144,7 +131,6 @@ if($_SESSION['nombreUsuario'] && $_SESSION['email'] && $_SESSION['contraseñaUno
     echo "Usuario se ha editado correctamente.";
     
     $_SESSION['nombreUsuario'] = null;
-    $_SESSION['email'] = null;
     $_SESSION['contraseñaUno'] = null;
     $_SESSION['contraseñaDos'] = null;
     $_SESSION['imagen_perfil'] = null;
