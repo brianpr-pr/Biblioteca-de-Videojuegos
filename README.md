@@ -32,7 +32,6 @@ Listado de errores o cosas a mejorar:
 ///// PARTE IMPORTANTE QUE CUENTA PARA NOTA PRIORIDAD MAXIMA:
 
 
-2. En la pagina para editar datos del usuario hacer que aparezca by default el valor del email del usuario.
 
 3. Crear vista de estadísticas para ver visualizaciones de nuestros videojuegos.
 
@@ -41,6 +40,6 @@ si nos gusta o no. esto se enviara mediante petición ajax.
 
 5. Crear check para autologgear al usuario mediante cookies.
 
-6. Reforzar validación de passsword en backend.
+6. Reforzar validación de password en backend.
 
 IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.

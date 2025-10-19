@@ -36,12 +36,23 @@ try {
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
     ON DELETE CASCADE ON UPDATE CASCADE)";
 
+    $sentenciaCinco = "CREATE TABLE cookies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(35) NOT NULL,
+    token VARCHAR(40) NOT NULL,
+    fecha_caduca DATE NOT NULL,
+    fecha_creacion DATE DEFAULT (CURRENT_DATE),
+    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE ON UPDATE CASCADE)";
+
     $conn->exec($sentenciaUno);
     $conn->exec($sentenciaDos);
     $conn->exec($sentenciaTres);
     $conn->exec($sentenciaCuatro);
+    $conn->exec($sentenciaCinco);
+
 } catch(PDOException $e) {
-  echo $sql . "<br>" . $e->getMessage();
+    echo $sql . "<br>" . $e->getMessage();
 }
 
 $conn = null;
