@@ -187,7 +187,7 @@ function cerrarSesion(){
     }
     $_SESSION['nombre_usuario'] = null;
     $_SESSION['email_usuario'] = null;
-/*
+
     $_SESSION = [];
 
     // Borrar cookie de sesión si se usa cookie de sesión
@@ -202,9 +202,9 @@ function cerrarSesion(){
             'samesite' => $params['samesite'] ?? 'Lax'
         ]);
     }
-*/
+
     // Destruir la sesión
-    //session_destroy();
+    session_destroy();
 
     header("Location: ./inicio_sesion.php");
 }
