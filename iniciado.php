@@ -37,9 +37,12 @@ if(!$_SESSION['nombre_usuario']){
 <?php 
 
 if($_POST['salir']){
+    cerrarSesion();
     // El usuario sale de su cuenta, limpieza de cookies.
     
-    if (!empty($_COOKIE[REMEMBER_COOKIE_NAME])) {
+   // if (!empty($_COOKIE[REMEMBER_COOKIE_NAME])) {
+
+        /*
         try {
             $pdo = db_connect();
             // revokeToken ya borra la cookie cliente (clearRememberCookie) en tu implementación
@@ -55,7 +58,8 @@ if($_POST['salir']){
     }
     $_SESSION['nombre_usuario'] = null;
     $_SESSION['email_usuario'] = null;
-/*
+*/
+    /*
     $_SESSION = [];
 
     // Borrar cookie de sesión si se usa cookie de sesión
@@ -74,7 +78,7 @@ if($_POST['salir']){
     // Destruir la sesión
     //session_destroy();
 
-    header("Location: ./inicio_sesion.php");
+    //header("Location: ./inicio_sesion.php");
 }
 
 include "./caracteristicas/utilidades/footer.php"?>
