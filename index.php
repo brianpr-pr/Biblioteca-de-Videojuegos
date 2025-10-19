@@ -5,6 +5,18 @@ ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include_once "./caracteristicas/usuario/usuario.php";
+include "./caracteristicas/cookies/manejo_tokens.php";
+
+if (empty($_SESSION['nombre_usuario'])) {
+    // intenta validar la cookie y obtener el username
+    $pdo = db_connect();
+    $username = validateRememberCookie($pdo); // devuelve username o null
+
+    if ($username) {
+        $_SESSION['nombre_usuario'] = $username;
+    }
+}
+
 
 if($_GET['salir']){
     salirUsuario();

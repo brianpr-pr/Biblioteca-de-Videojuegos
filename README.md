@@ -25,7 +25,7 @@ Listado de errores o cosas a mejorar:
 
 12. Hacer que el usuario pueda añadir y editar videojuegos sin agregar uno el mismo y se use la imagen default.png por defecto.
 
-
+13. Eliminar output de añadir_videojuego.php en el footer.
 
 
 
@@ -49,5 +49,4 @@ IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
 
 1. Comprobar que las cookies que esten caducadas no son utilizables. 
 
-
-2. No me esta haciendo loggin automaticamente en inicio de sesión, arreglar eso y evitar duplicación de cookies.
+2. En la pagina de iniciado.php hacer comprobaciones de si la parte que tengo comentada se integra bien y si sirve para algo.

@@ -9,10 +9,26 @@ require "./caracteristicas/servidor/administrarVideojuegos.php";
 require "./caracteristicas/validacion/validacionVideojuego.php";
 
 include_once "./caracteristicas/usuario/usuario.php";
+include "caracteristicas/cookies/manejo_tokens.php";
+
 // Variable para comprobar que la enviar la solicitud POST se hallan superado 
 // Todas las validaciones.
 $test = true;
 $feedback = '';
+
+
+
+if (empty($_SESSION['nombre_usuario'])) {
+    // intenta validar la cookie y obtener el username
+    $pdo = db_connect();
+    $username = validateRememberCookie($pdo); // devuelve username o null
+
+    if ($username) {
+        $_SESSION['nombre_usuario'] = $username;
+    }
+}
+
+
 if($_GET['salir']){
     salirUsuario();
 }

@@ -6,7 +6,15 @@ $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/cookies/manejo_tokens.php";
 
+if (empty($_SESSION['nombre_usuario'])) {
+    // intenta validar la cookie y obtener el username
+    $pdo = db_connect();
+    $username = validateRememberCookie($pdo); // devuelve username o null
 
+    if ($username) {
+        $_SESSION['nombre_usuario'] = $username;
+    }
+}
 
 if(!$_SESSION['nombre_usuario']){
     header("Location: inicio_sesion.php");
@@ -29,9 +37,8 @@ if(!$_SESSION['nombre_usuario']){
 <?php 
 
 if($_POST['salir']){
-    $_SESSION['nombre_usuario'] = null;
-    $_SESSION['email_usuario'] = null;
     // El usuario sale de su cuenta, limpieza de cookies.
+    
     if (!empty($_COOKIE[REMEMBER_COOKIE_NAME])) {
         try {
             $pdo = db_connect();
@@ -46,6 +53,9 @@ if($_POST['salir']){
         // asegurar limpieza aunque no exista entrada en BD
         clearRememberCookie();
     }
+    $_SESSION['nombre_usuario'] = null;
+    $_SESSION['email_usuario'] = null;
+/*
     $_SESSION = [];
 
     // Borrar cookie de sesión si se usa cookie de sesión
@@ -60,9 +70,9 @@ if($_POST['salir']){
             'samesite' => $params['samesite'] ?? 'Lax'
         ]);
     }
-
+*/
     // Destruir la sesión
-    session_destroy();
+    //session_destroy();
 
     header("Location: ./inicio_sesion.php");
 }

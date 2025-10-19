@@ -6,14 +6,28 @@ $nombreArchivo = basename(path: __FILE__);
 require "./caracteristicas/utilidades/header.php";
 require "./caracteristicas/servidor/administrarVideojuegos.php";
 include_once "./caracteristicas/usuario/usuario.php";
+include "caracteristicas/cookies/manejo_tokens.php";
 
-if($_GET['salir']){
-    salirUsuario();
+
+
+if (empty($_SESSION['nombre_usuario'])) {
+    // intenta validar la cookie y obtener el username
+    $pdo = db_connect();
+    $username = validateRememberCookie($pdo); // devuelve username o null
+
+    if ($username) {
+        $_SESSION['nombre_usuario'] = $username;
+    }
 }
 
 if(!$_SESSION['nombre_usuario']){
     header("Location: ./inicio_sesion.php?error=Es necesario que inicie sesión antes de poder ver la colección de videojuegos");
 }
+
+if($_GET['salir']){
+    salirUsuario();
+}
+
 ?>
 
 <h2>Colección de videojuegos</h2>

@@ -17,14 +17,8 @@ if (empty($_SESSION['nombre_usuario'])) {
     }
 }
 
-if($_SESSION['nombre_usuario']){
-    header("Location: ./iniciado.php");
-}
-
 //Comprobación de que usuario que no ha iniciado sesión no tenga un token valido asignado,
 //en cuyo caso lo inciamos automaticamente y redireccionamiento.
-
-
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     if(array_key_exists('error', $_GET)){
@@ -37,6 +31,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(!inicioSesion( $_POST['email'], $_POST['contraseña'] ) ){
         $_SESSION['email'] = null;
         $_SESSION['error'] = "{$_SESSION['error']}<h2>Email no es correcto.</h2><br>";
+        echo $_SESSION['error'];
+    } else{
+        $_SESSION['email'] = $_POST['email'];
     }
     //Al comentar esta línea lo que ocurre es que la refrescar la pagina me pregunta si quiero reenviar el formulario.
     //header("Location:" . $_SERVER['PHP_SELF']);
@@ -79,8 +76,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </div>
 
 <?php
+
 if( $_SESSION['email'] && $_SESSION['nombre_usuario']){
     $_SESSION['error'] = null;
+    
     try{
         echo "Creación de cookie iniciada.";
         $pdo =  db_connect();
@@ -89,6 +88,14 @@ if( $_SESSION['email'] && $_SESSION['nombre_usuario']){
     } catch(Exception $e){
          echo "Error: $e";
     }
+    
+//header("Location: ./iniciado.php");
+} else{
+    echo "No se esta superando la validación.";
+}
+
+if($_SESSION['nombre_usuario']){
+    header("Location: ./iniciado.php");
 }
 
 include "./caracteristicas/utilidades/footer.php";
