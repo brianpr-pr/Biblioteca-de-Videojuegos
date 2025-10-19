@@ -42,13 +42,13 @@ if($_POST['salir']){
     <div id="votos-container" style="margin:15px;">
         <input type="hidden" id="titulo_clave" value="<?php echo htmlspecialchars($_GET['titulo_clave'], ENT_QUOTES); ?>">
         <div>
-            <button id="btn-like">👍 Like</button>
-            <span id="likes-count">0</span>
+            <button id="like">👍 Like</button>
+            <span id="contador_like">0</span>
             &nbsp;&nbsp;
-            <button id="btn-dislike">👎 Dislike</button>
-            <span id="dislikes-count">0</span>
+            <button id="dislike">👎 Dislike</button>
+            <span id="contador_dislike">0</span>
         </div>
-        <div id="voto-usuario-msg" style="margin-top:8px;color:green;"></div>
+        <div id="resultado" style="margin-top:8px;"></div>
     </div>
 
     <div style="margin-left: 15px;">
@@ -62,6 +62,25 @@ if($_POST['salir']){
     </div>
     
 <script>
+    function enviarVoto(valor){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                document.getElementById("resultado").innerHTML = this.responseText;
+            }
+        };
+
+        xmlhttp.open("GET", "./caracteristicas/votos/votar.php?voto="+valor);
+        xmlhttp.send();
+    }
+
+    document.getElementById("like").addEventListener("click", event => {
+       enviarVoto(event.target.id);
+    });
+
+    document.getElementById("dislike").addEventListener("click", event => {
+        enviarVoto(event.target.id);
+    });
 </script>
 
 <?php
