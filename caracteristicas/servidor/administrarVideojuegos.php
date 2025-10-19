@@ -66,7 +66,9 @@ function mostrarDetallesVideojuego($tituloClave){
 
 function videojuegoDatos($tituloClave){
     try{
-        require "./caracteristicas/servidor/datos_servidor.php";
+        //Esto puede que cause algún bug:
+        include "./caracteristicas/servidor/datos_servidor.php";
+        include "./../servidor/datos_servidor.php";
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $stmt = $conn->prepare("SELECT * FROM videojuegos WHERE titulo_clave=:tituloClave");
         $stmt->execute(["tituloClave" => $tituloClave]);

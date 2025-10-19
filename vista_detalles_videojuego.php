@@ -70,16 +70,33 @@ if($_POST['salir']){
             }
         };
 
-        xmlhttp.open("GET", "./caracteristicas/votos/votar.php?voto="+valor);
+        xmlhttp.open("GET", "./caracteristicas/votos/votar.php?voto="+valor+"&titulo_clave="+document.getElementById("titulo_clave").value);
         xmlhttp.send();
+    }
+
+    function mostrarPuntuacion(valor){
+        document.getElementById(valor).innerHTML = 'this.responseText';
+/*
+        let xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                document.getElementById(valor).innerHTML = this.responseText;
+            }
+        };
+
+        xmlhttp.open("GET", "./caracteristicas/votos/votar.php?mostrar="+valor);
+        xmlhttp.send();*/
     }
 
     document.getElementById("like").addEventListener("click", event => {
        enviarVoto(event.target.id);
+       //mostrarPuntuacion(event.target.id);
     });
 
     document.getElementById("dislike").addEventListener("click", event => {
         enviarVoto(event.target.id);
+        //mostrarPuntuacion(event.target.id);
     });
 </script>
 

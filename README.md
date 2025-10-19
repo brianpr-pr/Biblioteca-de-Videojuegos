@@ -38,3 +38,6 @@ IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
 
 1. Comprobar que las cookies que esten caducadas no son utilizables. 
 
+Posibles bugs:
+
+1. administrarVideojuegos.php en línea 69, puede que cause algún bug inesperado.
