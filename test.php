@@ -11,6 +11,10 @@ if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
 
+//Comprobación de que usuario que no ha iniciado sesión no tenga un token valido asignado,
+//en cuyo caso lo inciamos automaticamente y redireccionamiento.
+
+
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     if(array_key_exists('error', $_GET)){

@@ -5,10 +5,13 @@ ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/validacion/validacionUsuario.php";
+include "caracteristicas/cookies/manejo_tokens.php";
 
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
+
+
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
     if(array_key_exists('error', $_GET)){
         echo "<h1>{$_GET['error']}</h1>";
@@ -21,7 +24,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $_SESSION['email'] = null;
         $_SESSION['error'] = "{$_SESSION['error']}<h2>Email no es correcto.</h2><br>";
     }
-    header("Location:" . $_SERVER['PHP_SELF']);
+    //Al comentar esta línea lo que ocurre es que la refrescar la pagina me pregunta si quiero reenviar el formulario.
+    //header("Location:" . $_SERVER['PHP_SELF']);
 }
 ?>
 
@@ -63,7 +67,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <?php
 if( $_SESSION['email'] && $_SESSION['nombre_usuario']){
     $_SESSION['error'] = null;
-    header("Location: ./iniciado.php");
+    try{
+        echo "Creación de cookie iniciada.";
+        $pdo =  db_connect();
+        $token = createRememberToken($pdo, $_SESSION['nombre_usuario'], 7);
+        setRememberCookie($token);
+    } catch(Exception $e){
+         echo "Error: $e";
+    }
 }
 
 include "./caracteristicas/utilidades/footer.php";
