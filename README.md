@@ -43,3 +43,11 @@ si nos gusta o no. esto se enviara mediante petición ajax.
 6. Reforzar validación de password en backend.
 
 IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
+
+
+/////// TESTING
+
+1. Comprobar que las cookies que esten caducadas no son utilizables. 
+
+
+2. No me esta haciendo loggin automaticamente en inicio de sesión, arreglar eso y evitar duplicación de cookies.

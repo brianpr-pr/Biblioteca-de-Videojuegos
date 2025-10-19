@@ -7,9 +7,23 @@ include "./caracteristicas/utilidades/header.php";
 include "./caracteristicas/validacion/validacionUsuario.php";
 include "caracteristicas/cookies/manejo_tokens.php";
 
+if (empty($_SESSION['nombre_usuario'])) {
+    // intenta validar la cookie y obtener el username
+    $pdo = db_connect();
+    $username = validateRememberCookie($pdo); // devuelve username o null
+
+    if ($username) {
+        $_SESSION['nombre_usuario'] = $username;
+    }
+}
+
 if($_SESSION['nombre_usuario']){
     header("Location: ./iniciado.php");
 }
+
+//Comprobación de que usuario que no ha iniciado sesión no tenga un token valido asignado,
+//en cuyo caso lo inciamos automaticamente y redireccionamiento.
+
 
 
 if($_SERVER['REQUEST_METHOD'] === 'GET'){
