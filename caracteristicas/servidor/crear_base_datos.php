@@ -45,11 +45,23 @@ try {
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
     ON DELETE CASCADE ON UPDATE CASCADE)";
 
+    $sentenciaSeis = "CREATE TABLE votos (
+    titulo_clave varchar(75) NOT NULL, 
+    nombre_usuario varchar(35) NOT NULL,
+    voto varchar(6) NOT NULL,
+    PRIMARY KEY (titulo_clave, nombre_usuario),
+    FOREIGN KEY (titulo_clave) REFERENCES videojuegos(titulo_clave)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+    ON DELETE CASCADE ON UPDATE CASCADE);";
+
     $conn->exec($sentenciaUno);
     $conn->exec($sentenciaDos);
     $conn->exec($sentenciaTres);
     $conn->exec($sentenciaCuatro);
     $conn->exec($sentenciaCinco);
+    $conn->exec($sentenciaSeis);
+
 
 } catch(PDOException $e) {
     echo $sql . "<br>" . $e->getMessage();

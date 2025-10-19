@@ -39,6 +39,18 @@ if($_POST['salir']){
     <h1 style="text-align:center;">Detalles de videojuego</h1>
     <?php echo $detallesVideojuego?>
 
+    <div id="votos-container" style="margin:15px;">
+        <input type="hidden" id="titulo_clave" value="<?php echo htmlspecialchars($_GET['titulo_clave'], ENT_QUOTES); ?>">
+        <div>
+            <button id="btn-like">👍 Like</button>
+            <span id="likes-count">0</span>
+            &nbsp;&nbsp;
+            <button id="btn-dislike">👎 Dislike</button>
+            <span id="dislikes-count">0</span>
+        </div>
+        <div id="voto-usuario-msg" style="margin-top:8px;color:green;"></div>
+    </div>
+
     <div style="margin-left: 15px;">
     <?php if ($_SESSION['nombre_usuario']): ?>
     <form method="POST">
@@ -47,6 +59,10 @@ if($_POST['salir']){
         <button name="salir" id="salir" value="true" type="submit">Salir de la cuenta</button>
     </form>
     <?php endif; ?>
-</div>
+    </div>
+    
+<script>
+</script>
+
 <?php
 include "./caracteristicas/utilidades/footer.php";
