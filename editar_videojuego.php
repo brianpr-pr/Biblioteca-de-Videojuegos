@@ -27,7 +27,7 @@ if (empty($_SESSION['nombre_usuario'])) {
 
 
 if($_GET['salir']){
-    salirUsuario();
+    cerrarSesion();
 }
 
 

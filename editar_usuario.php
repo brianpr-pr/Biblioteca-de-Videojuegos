@@ -55,6 +55,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 
 }
+
+if($_GET['salir']){
+    cerrarSesion();
+}
 ?>
 
 
@@ -133,6 +137,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     </form>    
 </div>
 
+<div style="margin-left: 15px;">
+    <?php if ($_SESSION['nombre_usuario']): ?>
+    <form method="GET">
+        <label for="salir">Pulse en el boton para salir de su cuenta.</label>
+        <br>
+        <button name="salir" id="salir" value="true" type="send">Salir de la cuenta</button>
+    </form>
+    <?php endif; ?>
+</div>
 
 <?php
 if($_SESSION['nombre_usuario']  && $_SESSION['contraseñaUno'] && $_SESSION['contraseñaDos']){

@@ -30,8 +30,23 @@ if($_POST['eliminar']){
     }
 }
 
+
+if($_POST['salir']){
+    cerrarSesion();
+}
+
 ?>
     <h1 style="text-align:center;">Detalles de videojuego</h1>
     <?php echo $detallesVideojuego?>
+
+    <div style="margin-left: 15px;">
+    <?php if ($_SESSION['nombre_usuario']): ?>
+    <form method="POST">
+        <label for="salir">Pulse en el boton para salir de su cuenta.</label>
+        <br>
+        <button name="salir" id="salir" value="true" type="submit">Salir de la cuenta</button>
+    </form>
+    <?php endif; ?>
+</div>
 <?php
 include "./caracteristicas/utilidades/footer.php";
