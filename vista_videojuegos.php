@@ -30,7 +30,13 @@ if($_GET['salir']){
 
 ?>
 
+
 <h2>Colección de videojuegos</h2>
+
+<label for="buscador">Buscar titulo</label>
+<input type="text" id="buscador" name="buscador" placeholder="Ingrese el titulo del videojuego que busca." style="width:250px;">
+<br><br><br>
+<p id="test"></p>
 <table>
     <tr>
         <th>Caratula</th>
@@ -49,5 +55,30 @@ if($_GET['salir']){
     </form>
     <?php endif; ?>
 </div>
+<script>
+    function mostrarListaVideojuegos(titulo) {
+  if (titulo.length == 0) {
+    document.getElementById("test").innerHTML = "";
+    return;
+  } else {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("test").innerHTML = this.responseText;
+      }
+    };
+    xmlhttp.open("GET", "./caracteristicas/servidor/buscador/mostrar_titulos.php?titulo=" + titulo);
+    xmlhttp.send();
+  }
+}
+
+
+document.getElementById('buscador').addEventListener("input", event => {
+    mostrarListaVideojuegos(event.target.value);
+});
+
+</script>
+
+
 <?
 include "./caracteristicas/utilidades/footer.php";
