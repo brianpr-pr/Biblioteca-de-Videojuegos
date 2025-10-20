@@ -5,7 +5,8 @@ ini_set('display_errors', 1);
 $nombreArchivo = basename(path: __FILE__);
 include "./caracteristicas/utilidades/header.php";
 require "./caracteristicas/servidor/administrarVideojuegos.php";
-include "caracteristicas/cookies/manejo_tokens.php";
+include "./caracteristicas/servidor/gestion_votos.php";
+include "./caracteristicas/cookies/manejo_tokens.php";
 
 
 if (empty($_SESSION['nombre_usuario'])) {
@@ -43,10 +44,10 @@ if($_POST['salir']){
         <input type="hidden" id="titulo_clave" value="<?php echo htmlspecialchars($_GET['titulo_clave'], ENT_QUOTES); ?>">
         <div>
             <button id="like">👍 Like</button>
-            <span name="contador_like" id="contador_like">0</span>
+            <span name="contador_like" id="contador_like"><?php echo mostrarPuntuacion(htmlspecialchars($_GET['titulo_clave'], ENT_QUOTES),'like')?></span>
             &nbsp;&nbsp;
             <button id="dislike">👎 Dislike</button>
-            <span id="contador_dislike" name="contador_dislike">0</span>
+            <span id="contador_dislike" name="contador_dislike"><?php echo mostrarPuntuacion(htmlspecialchars($_GET['titulo_clave'], ENT_QUOTES),'dislike')?></span>
         </div>
         <div id="resultado" style="margin-top:8px;"></div>
     </div>

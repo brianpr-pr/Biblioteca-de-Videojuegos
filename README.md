@@ -28,3 +28,8 @@ IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
 Posibles bugs:
 
 1. administrarVideojuegos.php en línea 69, puede que cause algún bug inesperado.
+
+
+2. En inicio de sesión: 
+Creación de cookie iniciada.
+Fatal error: Uncaught TypeError: setRememberCookie(): Argument #1 ($token) must be of type string, null given, called in C:\xampp\htdocs\servidor\Biblioteca-de-Videojuegos\inicio_sesion.php on line 87 and defined in C:\xampp\htdocs\servidor\Biblioteca-de-Videojuegos\caracteristicas\cookies\manejo_tokens.php:63 Stack trace: #0 C:\xampp\htdocs\servidor\Biblioteca-de-Videojuegos\inicio_sesion.php(87): setRememberCookie(NULL) #1 {main} thrown in C:\xampp\htdocs\servidor\Biblioteca-de-Videojuegos\caracteristicas\cookies\manejo_tokens.php on line 63

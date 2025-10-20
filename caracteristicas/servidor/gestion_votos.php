@@ -39,6 +39,7 @@ function añadirVoto($nombreUsuario, $tituloClave, $votoValor){
 function mostrarPuntuacion($tituloClave,$tipoPuntuacion){
     try{
         //Esto puede que cause algún bug:
+        include "./caracteristicas/servidor/datos_servidor.php";
         include "./../servidor/datos_servidor.php";
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
         $stmt = $conn->prepare("SELECT count(*) as cuenta FROM votos WHERE titulo_clave=:titulo_clave
