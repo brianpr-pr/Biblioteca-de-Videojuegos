@@ -251,3 +251,47 @@ $stmt = $conn->prepare("
 
 
 }
+
+
+
+function sumarVisitas($tituloClave){
+    try{
+        include "./caracteristicas/servidor/datos_servidor.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $stmt = $conn->prepare("
+            UPDATE videojuegos SET
+            numero_visitas = numero_visitas + 1
+            WHERE titulo_clave=:titulo_clave
+        ");
+        
+        $stmt->execute([
+            "titulo_clave" => $tituloClave]);
+        $conn = null;
+    } catch(PDOException $e){
+        echo "<Mensaje de error:>" . $e->getMessage();
+    }
+    $conn = null;
+    return false;
+}
+
+function mostrarNumeroVisitas($tituloClave){
+    try{
+        include "./caracteristicas/servidor/datos_servidor.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $stmt = $conn->prepare("
+            select numero_visitas from videojuegos
+            WHERE titulo_clave=:titulo_clave
+        ");
+        
+        $stmt->execute(["titulo_clave" => $tituloClave]);
+        if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            return $row['numero_visitas'];
+        }
+        $conn = null;
+        return 0;
+    } catch(PDOException $e){
+        echo "<Mensaje de error:>" . $e->getMessage();
+    }
+    $conn = null;
+    return false;
+}

@@ -8,10 +8,6 @@ Listado de errores o cosas a mejorar:
 
 ///// PARTE IMPORTANTE QUE CUENTA PARA NOTA PRIORIDAD MAXIMA:
 
-1. Añadir la columna vistas a la tabla videojuegos.
-
-3. Crear vista de estadísticas para ver visualizaciones de nuestros videojuegos.
-
 4. Hacer que la imagen de perfil se actualice y se muestre como icono arriba a la derecha.
 
 
@@ -22,8 +18,6 @@ IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
 1. Comprobar que las cookies que esten caducadas no son utilizables. 
 
 Posibles bugs:
-
-1. administrarVideojuegos.php en línea 69, puede que cause algún bug inesperado.
 
 
 2. En inicio de sesión: 

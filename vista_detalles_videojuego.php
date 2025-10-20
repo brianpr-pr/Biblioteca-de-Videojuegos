@@ -8,7 +8,6 @@ require "./caracteristicas/servidor/administrarVideojuegos.php";
 include "./caracteristicas/servidor/gestion_votos.php";
 include "./caracteristicas/cookies/manejo_tokens.php";
 
-
 if (empty($_SESSION['nombre_usuario'])) {
     // intenta validar la cookie y obtener el username
     $pdo = db_connect();
@@ -36,6 +35,9 @@ if($_POST['salir']){
     cerrarSesion();
 }
 
+
+sumarVisitas($_GET['titulo_clave']);
+
 ?>
     <h1 style="text-align:center;">Detalles de videojuego</h1>
     <?php echo $detallesVideojuego?>
@@ -51,6 +53,16 @@ if($_POST['salir']){
         </div>
         <div id="resultado" style="margin-top:8px;"></div>
     </div>
+
+
+<div>
+    <h2>Ver visitas</h2>
+    <a href="<?php echo 'visitas.php?titulo_clave='.$_GET['titulo_clave']; ?> " style="border:2px solid black;">Visitas</a>
+</div>
+
+
+
+
 
     <div style="margin-left: 15px;">
     <?php if ($_SESSION['nombre_usuario']): ?>

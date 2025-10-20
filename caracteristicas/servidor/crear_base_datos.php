@@ -31,6 +31,7 @@ try {
     url varchar(125) NOT NULL,
     fecha date NOT NULL, 
     nombre_usuario varchar(35),
+    numero_visitas int DEFAULT 0,
     FOREIGN KEY (categoria_clave) REFERENCES categorias(categoria_clave)
     ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
