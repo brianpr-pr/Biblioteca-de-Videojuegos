@@ -48,7 +48,7 @@ try {
     $sentenciaSeis = "CREATE TABLE votos (
     titulo_clave varchar(75) NOT NULL, 
     nombre_usuario varchar(35) NOT NULL,
-    voto varchar(6) NOT NULL,
+    voto varchar(7) NOT NULL,
     PRIMARY KEY (titulo_clave, nombre_usuario),
     FOREIGN KEY (titulo_clave) REFERENCES videojuegos(titulo_clave)
     ON DELETE CASCADE ON UPDATE CASCADE,
