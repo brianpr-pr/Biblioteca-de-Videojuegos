@@ -23,6 +23,33 @@ function mostrarVideojuegos(){
     $conn = null;
 }
 
+function mostrarVideojuegosBuscador($titulo){
+    try{
+        $result = "";
+        include "./caracteristicas/servidor/datos_servidor.php";
+        include "./../servidor/datos_servidor.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $stmt = $conn->prepare("SELECT titulo_clave, titulo, fecha, url FROM videojuegos 
+        WHERE titulo LIKE :titulo");
+        $stmt->execute(["titulo" => "$titulo%"]);
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $result = "{$result}
+            <tr>
+                <td><a href='vista_detalles_videojuego.php?titulo_clave={$row['titulo_clave']}'><img style='width:125px;height:125px;' src='{$row['url']}'></a></td>
+                <td><a href='vista_detalles_videojuego.php?titulo_clave={$row['titulo_clave']}'>{$row['titulo']}</a></td>
+                <td><a href='vista_detalles_videojuego.php?titulo_clave={$row['titulo_clave']}'>{$row['fecha']}</a></td>
+            </tr>";
+        }
+        $conn = null;
+        return $result;
+
+    } catch(PDOException $e){
+        echo "<br>" . $e->getMessage();
+    }
+    $conn = null;
+}
+
+
 function mostrarDetallesVideojuego($tituloClave){
     $resultado = "";
     if($datos = videojuegoDatos($tituloClave)){

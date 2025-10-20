@@ -37,7 +37,11 @@ if($_GET['salir']){
 <input type="text" id="buscador" name="buscador" placeholder="Ingrese el titulo del videojuego que busca." style="width:250px;">
 <br><br><br>
 <p id="test"></p>
-<table>
+
+<table id="busqueda"></table>
+
+<br>
+<table id="tabla">
     <tr>
         <th>Caratula</th>
         <th>Título</th>
@@ -58,16 +62,18 @@ if($_GET['salir']){
 <script>
     function mostrarListaVideojuegos(titulo) {
   if (titulo.length == 0) {
-    document.getElementById("test").innerHTML = "";
+    document.getElementById("busqueda").innerHTML = "";
+    document.getElementById("tabla").style.display = "block";
     return;
   } else {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("test").innerHTML = this.responseText;
+        document.getElementById("busqueda").innerHTML = this.responseText;
+        document.getElementById("tabla").style.display = "none";
       }
     };
-    xmlhttp.open("GET", "./caracteristicas/servidor/buscador/mostrar_titulos.php?titulo=" + titulo);
+    xmlhttp.open("GET", "./caracteristicas/buscador/mostrar_titulos.php?titulo=" + titulo);
     xmlhttp.send();
   }
 }
