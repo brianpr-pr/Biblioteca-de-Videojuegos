@@ -8,8 +8,7 @@ Listado de errores o cosas a mejorar:
 
 ///// PARTE IMPORTANTE QUE CUENTA PARA NOTA PRIORIDAD MAXIMA:
 
-4. Hacer que la imagen de perfil se actualice y se muestre como icono arriba a la derecha.
-
+4. Hacer que cuando el usuario modifique la imagen de perfil se actualize automaticamente.
 
 IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
 
