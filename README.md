@@ -4,7 +4,6 @@ Listado de errores o cosas a mejorar:
 
 4. Añadir javascript para mostrar si la contraseña cumple con la validación, si el titulo coincide con juegos que esten en la base de datos.
 
-13. Eliminar output de añadir_videojuego.php en el footer.
 
 ///// PARTE IMPORTANTE QUE CUENTA PARA NOTA PRIORIDAD MAXIMA:
 
@@ -20,7 +19,7 @@ Comienzo de realización de pruebas:
 
 Debemos mejorar nuestra aplicación web de una biblioteca online de libros, películas, videojuegos... (lo que prefieran). Debe tener las siguientes nuevas características:
 
-
+0. Al eliminar la base de datos y volver a crearla me sale un error de que no se ha encontrado, no eliminar la base de datos en la practica.
 
 
 1. Debe tener un registro mejorado, con foto de perfil opcional. En caso de no subirla que se ponga una por defecto. 

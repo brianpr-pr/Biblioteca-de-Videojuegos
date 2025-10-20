@@ -188,8 +188,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 <?php
 //Información sobre el resultado de la actualización de datos:
-echo $feedback;
+echo "ERRORES <br>" . $feedback;
 
-echo "<h1>" . var_dump($_POST) . var_dump($_SESSION) ."</h1>";
+//echo "<h1>" . var_dump($_POST) . var_dump($_SESSION) ."</h1>";
 
 include "./caracteristicas/utilidades/footer.php";
