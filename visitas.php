@@ -44,3 +44,6 @@ if($_POST['salir']){
     <h2>Número de visitas</h2>
     <h2><?php echo mostrarNumeroVisitas($_GET['titulo_clave']);?></h2>
 </div>
+
+<?php
+include "./caracteristicas/utilidades/footer.php";
