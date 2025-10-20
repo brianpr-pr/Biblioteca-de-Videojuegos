@@ -34,3 +34,24 @@ function añadirVoto($nombreUsuario, $tituloClave, $votoValor){
     $conn = null;
     return true;
 }
+
+
+function mostrarPuntuacion($tituloClave,$tipoPuntuacion){
+    try{
+        //Esto puede que cause algún bug:
+        include "./../servidor/datos_servidor.php";
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $stmt = $conn->prepare("SELECT count(*) as cuenta FROM votos WHERE titulo_clave=:titulo_clave
+        AND voto=:voto");
+        $stmt->execute(["titulo_clave" => $tituloClave, "voto" => $tipoPuntuacion]);
+
+        if($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $conn = null;
+            return $row['cuenta'];
+        }
+    } catch(PDOException $e){
+        echo "<br>" . $e->getMessage();
+    }
+    $conn = null;
+    return true;
+}

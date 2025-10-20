@@ -43,10 +43,10 @@ if($_POST['salir']){
         <input type="hidden" id="titulo_clave" value="<?php echo htmlspecialchars($_GET['titulo_clave'], ENT_QUOTES); ?>">
         <div>
             <button id="like">👍 Like</button>
-            <span id="contador_like">0</span>
+            <span name="contador_like" id="contador_like">0</span>
             &nbsp;&nbsp;
             <button id="dislike">👎 Dislike</button>
-            <span id="contador_dislike">0</span>
+            <span id="contador_dislike" name="contador_dislike">0</span>
         </div>
         <div id="resultado" style="margin-top:8px;"></div>
     </div>
@@ -75,28 +75,32 @@ if($_POST['salir']){
     }
 
     function mostrarPuntuacion(valor){
-        document.getElementById(valor).innerHTML = 'this.responseText';
-/*
+        
         let xmlhttp = new XMLHttpRequest();
 
         xmlhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                document.getElementById(valor).innerHTML = this.responseText;
+                if(this.responseText){
+                    valor.innerHTML = this.responseText;
+                } else{
+                    valor.innerHTML = 0;
+                }
+                
             }
         };
 
-        xmlhttp.open("GET", "./caracteristicas/votos/votar.php?mostrar="+valor);
-        xmlhttp.send();*/
+        xmlhttp.open("GET", "./caracteristicas/votos/mostrar_puntuacion.php?mostrar="+valor.id+"&titulo_clave="+document.getElementById("titulo_clave").value);
+        xmlhttp.send();
     }
 
     document.getElementById("like").addEventListener("click", event => {
        enviarVoto(event.target.id);
-       //mostrarPuntuacion(event.target.id);
+       mostrarPuntuacion(document.getElementById('contador_like'));
     });
 
     document.getElementById("dislike").addEventListener("click", event => {
         enviarVoto(event.target.id);
-        //mostrarPuntuacion(event.target.id);
+        mostrarPuntuacion(document.getElementById('contador_dislike'));
     });
 </script>
 
