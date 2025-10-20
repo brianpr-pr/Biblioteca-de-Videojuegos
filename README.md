@@ -12,12 +12,8 @@ Listado de errores o cosas a mejorar:
 
 3. Crear vista de estadísticas para ver visualizaciones de nuestros videojuegos.
 
-4. Añadir a la vista de detalles de videojuegos la posibilidad de indicar
-si nos gusta o no. esto se enviara mediante petición ajax.
+4. Hacer que la imagen de perfil se actualice y se muestre como icono arriba a la derecha.
 
-5. Barra buscador de videojuegos con AJAX. (Dejar para lo último.)
-
-5. Crear un regex más robusto, sobretodo para contraseñas.
 
 IMPORTANTE ITERAR EN ORDEN DE MENOR A MAYOR DIFICULTAD AGREGANDO FEATURES.
 
