@@ -1,5 +1,7 @@
 <?php
 include "./caracteristicas/utilidades/hojas_estilo_vinculador.php";
+include "./caracteristicas/usuario/usuario.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,6 +19,6 @@ include "./caracteristicas/utilidades/hojas_estilo_vinculador.php";
         <a href="inicio_sesion.php">Inicio de sesión</a>
         <a href="vista_videojuegos.php">Biblioteca de videojuegos</a>
         <a href="añadir_videojuego.php">Añadir videojuego</a>
-        <a href="iniciado.php"><img id="imagen-perfil" src="./perfil/default.png"></a>
+        <a href="iniciado.php"><img id="imagen-perfil" src="<?php echo mostrarImagenPerfil();?>"></a>
     </header>
-<?php include "./caracteristicas/servidor/conectar.php";?>
+<?php include "./caracteristicas/servidor/conectar.php"; ?>
