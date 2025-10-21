@@ -49,9 +49,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $_SESSION['imagen_perfil'] = $_POST['imagen'];
         } else{
             $_SESSION['imagen_perfil'] = null;
+            $_SESSION['error'] = "{$_SESSION['error']}<h2>Imagen de perfil no permitida.</h2><br>";
         }
     } catch(Exception $e){
         $_SESSION['imagen_perfil'] = null;
+        $_SESSION['error'] = "{$_SESSION['error']}<h2>Fallo al subir imagen de perfil.</h2><br>";
     }
 
 }
@@ -137,6 +139,7 @@ if($_GET['salir']){
     </form>    
 </div>
 
+<br><br><br>
 <div style="margin-left: 15px;">
     <?php if ($_SESSION['nombre_usuario']): ?>
     <form method="GET">
@@ -155,13 +158,13 @@ if($_SESSION['nombre_usuario']  && $_SESSION['contraseñaUno'] && $_SESSION['con
     } else{
         editarUsuario($_SESSION['nombre_usuario'],$_SESSION['email'], $_SESSION['contraseñaUno'], $_SESSION['imagen_anterior']);
     }
-    echo "Usuario se ha editado correctamente.";
+    echo "<h1>Usuario se ha editado correctamente.</h1>";
     
     $_SESSION['contraseñaUno'] = null;
     $_SESSION['contraseñaDos'] = null;
     //header(header: "Location: ./iniciado.php");
 } else{
-    echo "Usuario no se ha editado.";
+    echo "<h1>Usuario no se ha editado.</h1>";
     echo $_SESSION['error'];
     $_SESSION['error'] = null;
 }

@@ -156,7 +156,7 @@ function perfilValidacion(){
     }
 
     if( ! in_array($_FILES['imagen']['type'], ['image/gif', "image/png" , "image/jpeg"])){
-        throw new ErrorException("Formato de imagen invalido: " . var_dump($_FILES['imagen']) );
+        throw new ErrorException("Formato de imagen invalido:");
     }
 
     
