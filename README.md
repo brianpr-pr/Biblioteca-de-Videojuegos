@@ -1,3 +1,1 @@
-Listado de errores o cosas a mejorar:
-
-4. Añadir javascript para mostrar si la contraseña cumple con la validación, si el titulo coincide con juegos que esten en la base de datos.
+Proyecto realizado para asignatura 'desarrollo web en entorno servidor' como parte del 2º año del ciclo superior de 'desarrollo de aplicaciones web'
