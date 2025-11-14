@@ -64,7 +64,7 @@ if($_GET['salir']){
 ?>
 
 
-<div>
+<div class="formularios">
     <form accept="utf-8" method="POST" enctype="multipart/form-data">
         <h2>Editar datos del perfil</h2>
         <br>

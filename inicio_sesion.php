@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 ?>
 
-<div>
+<div class="formularios">
     <form accept="utf-8" method="POST">
         <h2>Inicio de sesión</h2>
         <br>

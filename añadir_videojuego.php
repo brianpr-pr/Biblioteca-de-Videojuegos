@@ -90,7 +90,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 ?>
 
-<div style="margin-left: 25px;">
+<div class="formularios">
     <h2>Editar videojuego</h2>
     <h4>Propietario: <?php echo $s;?></h4>
     <form method="POST" enctype="multipart/form-data">

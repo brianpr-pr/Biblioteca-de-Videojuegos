@@ -60,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 ?>
 
-<div>
+<div class="formularios">
     <form accept="utf-8" method="POST" enctype="multipart/form-data">
         <h2>Registro</h2>
         <br>
